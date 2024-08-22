@@ -1,0 +1,32 @@
+{
+    "image": {
+        "file_name": "image1.jpg",
+        "height": 640,
+        "width": 480,
+        "id": 6091,
+        "tags": {
+            "weather": "rainy",
+            "time": "night"
+        }
+    },
+    "type": "instances",
+    "annotations": [
+        {
+            "area": 46726.43029999999,
+            "category_str": "stop sign",
+            "image_id": 6091,
+            "bbox": [
+                100.22,
+                117.54,
+                253.43,
+                274.9
+            ],
+            "category_id": 13,
+            "id": 269791,
+            "attributes": {
+                "colors": ["red","white"],
+                "occluded": true
+            }
+        }
+    ]
+}

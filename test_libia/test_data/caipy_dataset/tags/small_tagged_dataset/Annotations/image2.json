@@ -1,0 +1,31 @@
+{
+    "image": {
+        "file_name": "image2.jpg",
+        "height": 476,
+        "width": 500,
+        "id": 10395,
+        "tags":{
+           "time": "night"
+        }
+    },
+    "type": "instances",
+    "annotations": [
+        {
+            "area": 84587.43910000003,
+            "category_str": "teddy bear",
+            "image_id": 10395,
+            "bbox": [
+                49.19,
+                66.2,
+                378.97,
+                379.68
+            ],
+            "category_id": 88,
+            "id": 1161234,
+            "attributes": {
+                "colors": ["grey"],
+                "position": ["front"]
+            }
+        }
+    ]
+}

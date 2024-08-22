@@ -1,0 +1,13 @@
+__name__: Dataset
+annotations: DataFrame:annotations.pq
+booleanized_columns:
+  annotations: !!set {}
+  images: !!set {}
+dataset_name: inside_else_memory
+images: DataFrame:images.pq
+images_root: such/serious
+label_map:
+  15: step
+  19: why
+  25: interview
+version: 2.0.1

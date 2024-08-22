@@ -1,0 +1,8 @@
+path: ""
+
+train: "train"
+val: "valid"
+
+
+nc: 15
+names: ["person", "bear", "zebra", "bowl", "orange", "broccoli", "chair", "potted plant", "dining table", "tv", "microwave", "refrigerator", "book", "clock", "vase"]

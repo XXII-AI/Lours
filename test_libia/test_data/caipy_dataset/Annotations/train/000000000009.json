@@ -1,0 +1,115 @@
+{
+    "image": {
+        "file_name": "000000000009.jpg",
+        "height": 480,
+        "width": 640,
+        "id": 9
+    },
+    "type": "instances",
+    "annotations": [
+        {
+            "area": 120057.13925,
+            "image_id": 9,
+            "bbox": [
+                1.08,
+                187.69,
+                611.59,
+                285.84
+            ],
+            "category_id": 51,
+            "id": 1038967,
+            "category_str": "bowl"
+        },
+        {
+            "area": 44434.751099999994,
+            "image_id": 9,
+            "bbox": [
+                311.73,
+                4.31,
+                319.28,
+                228.68
+            ],
+            "category_id": 51,
+            "id": 1039564,
+            "category_str": "bowl"
+        },
+        {
+            "area": 49577.94434999999,
+            "image_id": 9,
+            "bbox": [
+                249.6,
+                229.27,
+                316.24,
+                245.08
+            ],
+            "category_id": 56,
+            "id": 1058555,
+            "category_str": "broccoli"
+        },
+        {
+            "area": 24292.781700000007,
+            "image_id": 9,
+            "bbox": [
+                0.0,
+                13.51,
+                434.48,
+                375.12
+            ],
+            "category_id": 51,
+            "id": 1534147,
+            "category_str": "bowl"
+        },
+        {
+            "area": 2239.2924,
+            "image_id": 9,
+            "bbox": [
+                376.2,
+                40.36,
+                75.55,
+                46.53
+            ],
+            "category_id": 55,
+            "id": 1913551,
+            "category_str": "orange"
+        },
+        {
+            "area": 1658.8913000000007,
+            "image_id": 9,
+            "bbox": [
+                465.78,
+                38.97,
+                58.07,
+                46.67
+            ],
+            "category_id": 55,
+            "id": 1913746,
+            "category_str": "orange"
+        },
+        {
+            "area": 3609.3030499999995,
+            "image_id": 9,
+            "bbox": [
+                385.7,
+                73.66,
+                84.02,
+                70.51
+            ],
+            "category_id": 55,
+            "id": 1913856,
+            "category_str": "orange"
+        },
+        {
+            "area": 2975.276,
+            "image_id": 9,
+            "bbox": [
+                364.05,
+                2.49,
+                94.76,
+                71.07
+            ],
+            "category_id": 55,
+            "id": 1914001,
+            "category_str": "orange"
+        }
+    ]
+}

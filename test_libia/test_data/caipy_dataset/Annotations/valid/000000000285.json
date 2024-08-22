@@ -1,0 +1,24 @@
+{
+    "image": {
+        "file_name": "000000000285.jpg",
+        "height": 640,
+        "width": 586,
+        "id": 285
+    },
+    "type": "instances",
+    "annotations": [
+        {
+            "area": 275709.8110500001,
+            "image_id": 285,
+            "bbox": [
+                1.43,
+                68.81,
+                584.57,
+                563.94
+            ],
+            "category_id": 23,
+            "id": 587562,
+            "category_str": "bear"
+        }
+    ]
+}

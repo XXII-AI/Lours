@@ -1,0 +1,37 @@
+{
+  "image": {
+    "id": 200,
+    "file_name": "785.jpg",
+    "height": 427,
+    "width": 640,
+    "tags": {
+      "weather": "sunny",
+      "time": "day"
+    }
+  },
+  "type": "instances",
+  "annotations": [
+    {
+      "id": 0,
+      "category_id": 2,
+      "category_str": "person",
+      "bbox": [1256, 202, 59, 47],
+      "attributes":{
+        "colors": ["blue", "turquoise"],
+        "occluded": true
+      },
+      "parent_id": 1,
+      "confidence": 0.5
+    },
+    {
+      "id": 1,
+      "category_id": 800,
+      "category_str": "head",
+      "bbox": [1256, 202, 59, 47],
+      "attributes": {
+        "position": ["side"]
+      },
+      "children_ids": [0]
+    }
+  ]
+}

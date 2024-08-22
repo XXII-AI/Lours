@@ -1,0 +1,144 @@
+{
+  "info": {
+    "description": "Made with XXII dataset helper",
+    "url": "http://xxii.fr",
+    "version": "0",
+    "year": 2022,
+    "contributor": "XXII"
+  },
+  "images": [
+    {
+      "id": 9,
+      "file_name": "train/000000000009.png",
+      "height": 480,
+      "width": 640,
+      "split": "train"
+    },
+    {
+      "id": 34,
+      "file_name": "train/000000000034.png",
+      "height": 425,
+      "width": 640,
+      "split": "train"
+    }
+  ],
+  "annotations": [
+    {
+      "id": 1038967,
+      "area": 120057.13925,
+      "image_id": 9,
+      "split": "train",
+      "bbox": [
+        1.08,
+        187.69,
+        611.59,
+        285.84
+      ],
+      "iscrowd": 0
+    },
+    {
+      "id": 1039564,
+      "area": 44434.751099999994,
+      "image_id": 9,
+      "split": "train",
+      "bbox": [
+        311.73,
+        4.31,
+        319.28,
+        228.68
+      ],
+      "iscrowd": 0
+    },
+    {
+      "id": 1058555,
+      "area": 49577.94434999999,
+      "image_id": 9,
+      "split": "train",
+      "bbox": [
+        249.6,
+        229.27,
+        316.24,
+        245.08
+      ],
+      "iscrowd": 0
+    },
+    {
+      "id": 1534147,
+      "area": 24292.781700000007,
+      "image_id": 9,
+      "split": "train",
+      "bbox": [
+        0.0,
+        13.51,
+        434.48,
+        375.12
+      ],
+      "iscrowd": 0
+    },
+    {
+      "id": 1913551,
+      "area": 2239.2924,
+      "image_id": 9,
+      "split": "train",
+      "bbox": [
+        376.2,
+        40.36,
+        75.55,
+        46.53
+      ],
+      "iscrowd": 0
+    },
+    {
+      "id": 1913746,
+      "area": 1658.8913000000007,
+      "image_id": 9,
+      "split": "train",
+      "bbox": [
+        465.78,
+        38.97,
+        58.07,
+        46.67
+      ],
+      "iscrowd": 0
+    },
+    {
+      "id": 1913856,
+      "area": 3609.3030499999995,
+      "image_id": 9,
+      "split": "train",
+      "bbox": [
+        385.7,
+        73.66,
+        84.02,
+        70.51
+      ],
+      "iscrowd": 0
+    },
+    {
+      "id": 1914001,
+      "area": 2975.276,
+      "image_id": 9,
+      "split": "train",
+      "bbox": [
+        364.05,
+        2.49,
+        94.76,
+        71.07
+      ],
+      "iscrowd": 0
+    },
+    {
+      "id": 589229,
+      "area": 92920.15370000002,
+      "image_id": 34,
+      "split": "train",
+      "bbox": [
+        0.96,
+        20.06,
+        441.23,
+        379.15
+      ],
+      "iscrowd": 0
+    }
+  ]
+}

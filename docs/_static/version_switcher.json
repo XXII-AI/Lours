@@ -1,0 +1,12 @@
+[
+  {
+    "name": "v0.1.0",
+    "version": "0.1.0",
+    "url": "UPDATE-ME/stable/"
+  },
+  {
+    "name": "dev (latest)",
+    "version": "dev",
+    "url": "UPDATE-ME/latest/"
+  }
+]

@@ -1,0 +1,271 @@
+{
+    "image": {
+        "file_name": "000000000139.jpg",
+        "height": 426,
+        "width": 640,
+        "id": 139
+    },
+    "type": "instances",
+    "annotations": [
+        {
+            "area": 531.8071000000001,
+            "image_id": 139,
+            "bbox": [
+                236.98,
+                142.51,
+                24.7,
+                69.5
+            ],
+            "category_id": 64,
+            "id": 26547,
+            "category_str": "potted plant"
+        },
+        {
+            "area": 13244.657700000002,
+            "image_id": 139,
+            "bbox": [
+                7.03,
+                167.76,
+                149.32,
+                94.87
+            ],
+            "category_id": 72,
+            "id": 34646,
+            "category_str": "tv"
+        },
+        {
+            "area": 5833.117949999999,
+            "image_id": 139,
+            "bbox": [
+                557.21,
+                209.19,
+                81.35,
+                78.73
+            ],
+            "category_id": 72,
+            "id": 35802,
+            "category_str": "tv"
+        },
+        {
+            "area": 2245.34355,
+            "image_id": 139,
+            "bbox": [
+                358.98,
+                218.05,
+                56.0,
+                102.83
+            ],
+            "category_id": 62,
+            "id": 103487,
+            "category_str": "chair"
+        },
+        {
+            "area": 1833.7840000000017,
+            "image_id": 139,
+            "bbox": [
+                290.69,
+                218.0,
+                61.83,
+                98.48
+            ],
+            "category_id": 62,
+            "id": 104368,
+            "category_str": "chair"
+        },
+        {
+            "area": 1289.3734500000014,
+            "image_id": 139,
+            "bbox": [
+                413.2,
+                223.01,
+                30.17,
+                81.36
+            ],
+            "category_id": 62,
+            "id": 105328,
+            "category_str": "chair"
+        },
+        {
+            "area": 210.14820000000023,
+            "image_id": 139,
+            "bbox": [
+                317.4,
+                219.24,
+                21.58,
+                11.59
+            ],
+            "category_id": 62,
+            "id": 110334,
+            "category_str": "chair"
+        },
+        {
+            "area": 2913.1103999999987,
+            "image_id": 139,
+            "bbox": [
+                412.8,
+                157.61,
+                53.05,
+                138.01
+            ],
+            "category_id": 1,
+            "id": 230831,
+            "category_str": "person"
+        },
+        {
+            "area": 435.1449499999997,
+            "image_id": 139,
+            "bbox": [
+                384.43,
+                172.21,
+                15.12,
+                35.74
+            ],
+            "category_id": 1,
+            "id": 233201,
+            "category_str": "person"
+        },
+        {
+            "area": 217.71919999999997,
+            "image_id": 139,
+            "bbox": [
+                512.22,
+                205.75,
+                14.74,
+                15.97
+            ],
+            "category_id": 78,
+            "id": 1640282,
+            "category_str": "microwave"
+        },
+        {
+            "area": 2089.9747999999986,
+            "image_id": 139,
+            "bbox": [
+                493.1,
+                174.34,
+                20.29,
+                108.31
+            ],
+            "category_id": 82,
+            "id": 1647285,
+            "category_str": "refrigerator"
+        },
+        {
+            "area": 338.60884999999973,
+            "image_id": 139,
+            "bbox": [
+                604.77,
+                305.89,
+                14.34,
+                45.71
+            ],
+            "category_id": 84,
+            "id": 1648594,
+            "category_str": "book"
+        },
+        {
+            "area": 322.5935999999982,
+            "image_id": 139,
+            "bbox": [
+                613.24,
+                308.24,
+                12.88,
+                46.44
+            ],
+            "category_id": 84,
+            "id": 1654394,
+            "category_str": "book"
+        },
+        {
+            "area": 225.6642000000005,
+            "image_id": 139,
+            "bbox": [
+                447.77,
+                121.12,
+                13.97,
+                21.88
+            ],
+            "category_id": 85,
+            "id": 1666628,
+            "category_str": "clock"
+        },
+        {
+            "area": 2171.6188500000007,
+            "image_id": 139,
+            "bbox": [
+                549.06,
+                309.43,
+                36.68,
+                89.67
+            ],
+            "category_id": 86,
+            "id": 1667817,
+            "category_str": "vase"
+        },
+        {
+            "area": 178.18510000000012,
+            "image_id": 139,
+            "bbox": [
+                350.76,
+                208.84,
+                11.37,
+                22.55
+            ],
+            "category_id": 86,
+            "id": 1669970,
+            "category_str": "vase"
+        },
+        {
+            "area": 90.98724999999988,
+            "image_id": 139,
+            "bbox": [
+                412.25,
+                219.02,
+                9.63,
+                12.52
+            ],
+            "category_id": 62,
+            "id": 1941808,
+            "category_str": "chair"
+        },
+        {
+            "area": 189.56010000000012,
+            "image_id": 139,
+            "bbox": [
+                241.24,
+                194.99,
+                14.22,
+                17.63
+            ],
+            "category_id": 86,
+            "id": 2146194,
+            "category_str": "vase"
+        },
+        {
+            "area": 120.23200000000004,
+            "image_id": 139,
+            "bbox": [
+                336.79,
+                199.5,
+                9.73,
+                16.73
+            ],
+            "category_id": 86,
+            "id": 2146548,
+            "category_str": "vase"
+        },
+        {
+            "area": 2362.4897499999984,
+            "image_id": 139,
+            "bbox": [
+                321.21,
+                231.22,
+                125.56,
+                88.93
+            ],
+            "category_id": 67,
+            "id": 2204286,
+            "category_str": "dining table"
+        }
+    ]
+}
