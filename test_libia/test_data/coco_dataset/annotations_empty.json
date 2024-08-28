@@ -1,0 +1,102 @@
+{
+  "info": {
+    "description": "Made with XXII dataset helper",
+    "url": "http://xxii.fr",
+    "version": "0",
+    "year": 2022,
+    "contributor": "XXII"
+  },
+  "images": [
+    {
+      "id": 9,
+      "file_name": "train/000000000009.png",
+      "height": 480,
+      "width": 640,
+      "split": "train"
+    },
+    {
+      "id": 34,
+      "file_name": "train/000000000034.png",
+      "height": 425,
+      "width": 640,
+      "split": "train"
+    }
+  ],
+  "categories": [
+    {
+      "supercategory": "",
+      "id": 1,
+      "name": "person"
+    },
+    {
+      "supercategory": "",
+      "id": 23,
+      "name": "bear"
+    },
+    {
+      "supercategory": "",
+      "id": 24,
+      "name": "zebra"
+    },
+    {
+      "supercategory": "",
+      "id": 51,
+      "name": "bowl"
+    },
+    {
+      "supercategory": "",
+      "id": 55,
+      "name": "orange"
+    },
+    {
+      "supercategory": "",
+      "id": 56,
+      "name": "broccoli"
+    },
+    {
+      "supercategory": "",
+      "id": 62,
+      "name": "chair"
+    },
+    {
+      "supercategory": "",
+      "id": 64,
+      "name": "potted plant"
+    },
+    {
+      "supercategory": "",
+      "id": 67,
+      "name": "dining table"
+    },
+    {
+      "supercategory": "",
+      "id": 72,
+      "name": "tv"
+    },
+    {
+      "supercategory": "",
+      "id": 78,
+      "name": "microwave"
+    },
+    {
+      "supercategory": "",
+      "id": 82,
+      "name": "refrigerator"
+    },
+    {
+      "supercategory": "",
+      "id": 84,
+      "name": "book"
+    },
+    {
+      "supercategory": "",
+      "id": 85,
+      "name": "clock"
+    },
+    {
+      "supercategory": "",
+      "id": 86,
+      "name": "vase"
+    }
+  ]
+}

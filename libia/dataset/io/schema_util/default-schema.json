@@ -1,0 +1,61 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://github.com/XXII-AI/Lours",
+    "type": "object",
+    "properties": {
+        "image": {
+            "type": "object",
+            "properties": {
+                "file_name": {"type": "string"},
+                "id": {"type": "integer", "minimum": 0},
+                "width": {"type": "integer", "minimum": 0},
+                "height": {"type": "integer", "minimum": 0},
+                "tags": {
+                    "type": "object",
+                    "properties": {
+                        "time": {"enum": ["day", "night"]},
+                        "weather": {"enum": ["rainy", "sunny", "snowy", "foggy", "cloudy", "clear"]}
+                    }
+                }
+            },
+            "required": ["file_name", "id", "width", "height"]
+        },
+        "annotations": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "id": {"type": "integer", "minimum": 0},
+                    "parent_id": {"type": "integer", "minimum": 0},
+                    "children_ids": {
+                        "type": "array",
+                        "items": {"type": "integer", "minimum": 0},
+                        "uniqueItems": true
+                    },
+                    "tracking_id": {"type": "integer", "minimum": 0},
+                    "category_id": {"type": "integer", "minimum": 0},
+		            "category_str": {"type": "string"},
+                    "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+                    "bbox": {"type": "array", "items": {"type": "number", "minimum": 0}, "minItems": 2, "maxItems": 4},
+                    "attributes": {
+                        "type": "object",
+                        "properties": {
+                            "colors": {
+                                "type": "array",
+                                "items": {"enum": ["red", "green", "yellow", "blue", "white", "black", "orange", "purple", "grey", "brown", "pink", "beige", "cyan"]},
+                                "uniqueItems": true
+                            },
+                            "position": {
+                                "type": "array",
+                                "items": {"enum": ["side", "front", "top", "back", "unknown"]},
+                                "uniqueItems": true
+                            },
+                            "occluded" : {"type": "boolean"}
+                        }
+                    }
+                },
+                "required": ["id", "category_id", "bbox"]
+            }
+        }
+    }
+}

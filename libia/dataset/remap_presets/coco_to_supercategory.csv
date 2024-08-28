@@ -1,0 +1,92 @@
+input_category_id,input_category_name,output_category_id,output_category_name
+1,person,1,person
+2,bicycle,2,vehicle
+3,car,2,vehicle
+4,motorcycle,2,vehicle
+5,airplane,2,vehicle
+6,bus,2,vehicle
+7,train,2,vehicle
+8,truck,2,vehicle
+9,boat,2,vehicle
+10,traffic light,3,outdoor
+11,fire hydrant,3,outdoor
+12,street sign,3,outdoor
+13,stop sign,3,outdoor
+14,parking meter,3,outdoor
+15,bench,3,outdoor
+16,bird,4,animal
+17,cat,4,animal
+18,dog,4,animal
+19,horse,4,animal
+20,sheep,4,animal
+21,cow,4,animal
+22,elephant,4,animal
+23,bear,4,animal
+24,zebra,4,animal
+25,giraffe,4,animal
+26,hat,5,accessory
+27,backpack,5,accessory
+28,umbrella,5,accessory
+29,shoe,5,accessory
+30,eye glasses,5,accessory
+31,handbag,5,accessory
+32,tie,5,accessory
+33,suitcase,5,accessory
+34,frisbee,6,sports
+35,skis,6,sports
+36,snowboard,6,sports
+37,sports ball,6,sports
+38,kite,6,sports
+39,baseball bat,6,sports
+40,baseball glove,6,sports
+41,skateboard,6,sports
+42,surfboard,6,sports
+43,tennis racket,6,sports
+44,bottle,7,kitchen
+45,plate,7,kitchen
+46,wine glass,7,kitchen
+47,cup,7,kitchen
+48,fork,7,kitchen
+49,knife,7,kitchen
+50,spoon,7,kitchen
+51,bowl,7,kitchen
+52,banana,8,food
+53,apple,8,food
+54,sandwich,8,food
+55,orange,8,food
+56,broccoli,8,food
+57,carrot,8,food
+58,hot dog,8,food
+59,pizza,8,food
+60,donut,8,food
+61,cake,8,food
+62,chair,9,furniture
+63,couch,9,furniture
+64,potted plant,9,furniture
+65,bed,9,furniture
+66,mirror,9,furniture
+67,dining table,9,furniture
+68,window,9,furniture
+69,desk,9,furniture
+70,toilet,9,furniture
+71,door,9,furniture
+72,tv,10,electronic
+73,laptop,10,electronic
+74,mouse,10,electronic
+75,remote,10,electronic
+76,keyboard,10,electronic
+77,cell phone,10,electronic
+78,microwave,11,appliance
+79,oven,11,appliance
+80,toaster,11,appliance
+81,sink,11,appliance
+82,refrigerator,11,appliance
+83,blender,11,appliance
+84,book,12,indoor
+85,clock,12,indoor
+86,vase,12,indoor
+87,scissors,12,indoor
+88,teddy bear,12,indoor
+89,hair drier,12,indoor
+90,toothbrush,12,indoor
+91,hair brush,12,indoor

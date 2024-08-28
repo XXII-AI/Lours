@@ -1,0 +1,28 @@
+<annotation>
+	<filename>2009_000935.jpg</filename>
+	<folder>VOC2012</folder>
+	<object>
+		<name>dog</name>
+		<bndbox>
+			<xmax>344</xmax>
+			<xmin>234</xmin>
+			<ymax>248</ymax>
+			<ymin>11</ymin>
+		</bndbox>
+		<difficult>0</difficult>
+		<occluded>0</occluded>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+	</object>
+	<segmented>1</segmented>
+	<size>
+		<depth>3</depth>
+		<height>375</height>
+		<width>500</width>
+	</size>
+	<source>
+		<annotation>PASCAL VOC2009</annotation>
+		<database>The VOC2009 Database</database>
+		<image>flickr</image>
+	</source>
+</annotation>

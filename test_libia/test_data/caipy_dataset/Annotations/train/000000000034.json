@@ -1,0 +1,24 @@
+{
+    "image": {
+        "file_name": "000000000034.jpg",
+        "height": 425,
+        "width": 640,
+        "id": 34
+    },
+    "type": "instances",
+    "annotations": [
+        {
+            "area": 92920.15370000002,
+            "image_id": 34,
+            "bbox": [
+                0.96,
+                20.06,
+                441.23,
+                379.15
+            ],
+            "category_id": 24,
+            "id": 589229,
+            "category_str": "zebra"
+        }
+    ]
+}

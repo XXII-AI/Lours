@@ -1,0 +1,21 @@
+input_category_id,input_category_name,output_category_id,output_category_name
+1,person,15,person
+2,bicycle,2,bicycle
+3,car,7,car
+4,motorcycle,14,motorbike
+5,airplane,1,aeroplane
+6,bus,6,bus
+7,train,19,train
+9,boat,4,boat
+16,bird,3,bird
+17,cat,8,cat
+18,dog,12,dog
+19,horse,13,horse
+20,sheep,17,sheep
+21,cow,10,cow
+44,bottle,5,bottle
+62,chair,9,chair
+63,couch,18,sofa
+64,potted plant,16,pottedplant
+67,dining table,11,diningtable
+72,tv,20,tvmonitor

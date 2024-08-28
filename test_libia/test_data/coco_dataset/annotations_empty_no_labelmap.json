@@ -1,0 +1,25 @@
+{
+  "info": {
+    "description": "Made with XXII dataset helper",
+    "url": "http://xxii.fr",
+    "version": "0",
+    "year": 2022,
+    "contributor": "XXII"
+  },
+  "images": [
+    {
+      "id": 9,
+      "file_name": "train/000000000009.png",
+      "height": 480,
+      "width": 640,
+      "split": "train"
+    },
+    {
+      "id": 34,
+      "file_name": "train/000000000034.png",
+      "height": 425,
+      "width": 640,
+      "split": "train"
+    }
+  ]
+}

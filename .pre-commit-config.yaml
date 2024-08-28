@@ -1,0 +1,68 @@
+repos:
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v4.6.0
+  hooks:
+  - id: trailing-whitespace
+  - id: end-of-file-fixer
+    exclude: ^.*\.cache/|^.*\.egg-info/
+  - id: check-merge-conflict
+  - id: check-case-conflict
+  - id: check-json
+  - id: check-toml
+  - id: check-ast
+  - id: debug-statements
+  - id: check-yaml
+    exclude: .gitlab-ci.yml
+- repo: https://github.com/charliermarsh/ruff-pre-commit
+  rev: v0.5.5
+  hooks:
+  - id: ruff
+    args:
+    - --fix
+    - --exit-non-zero-on-fix
+    - --target-version=py310
+    - --extend-select=UP,I
+- repo: https://github.com/psf/black-pre-commit-mirror
+  rev: 24.4.2
+  hooks:
+  - id: black
+    args:
+    - --preview
+    - --enable-unstable-feature=string_processing
+  - id: black-jupyter
+    args:
+    - --preview
+    - --enable-unstable-feature=string_processing
+- repo: https://github.com/pycqa/pydocstyle
+  rev: 6.3.0
+  hooks:
+  - id: pydocstyle
+    args:
+    - --convention=google
+    - --add-ignore=D415,D205,D1
+    additional_dependencies:
+    - tomli
+- repo: https://github.com/jsh9/pydoclint
+  rev: 0.5.6
+  hooks:
+  - id: pydoclint
+    args:
+    - -aid=True
+    - --style=google
+    - -athd=False
+    - -crt=False
+- repo: https://github.com/igorshubovych/markdownlint-cli
+  rev: v0.41.0
+  hooks:
+  - id: markdownlint
+    args:
+    - --disable=MD013
+    - --disable=MD024
+    exclude: ^docs/.*
+- repo: https://github.com/keewis/blackdoc
+  rev: v0.3.9
+  hooks:
+  - id: blackdoc
+    additional_dependencies:
+    - black==24.4.2
+  - id: blackdoc-autoupdate-black
