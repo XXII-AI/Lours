@@ -1,4 +1,4 @@
-# README LibIA
+# README LOURS
 
 A lib to help R&D team with its experiments.
 
@@ -16,25 +16,25 @@ Sphinx docs is available here:
 ### With poetry
 
 ```bash
-poetry add xxii-libia
+poetry add lours
 ```
 
 You can also install the pre-release by modifying the last line
 
 ```bash
-poetry add xxii-libia --alow-prereleases
+poetry add lours --alow-prereleases
 ```
 
 ### With pip
 
 ```bash
-pip install xxii-libia
+pip install lours
 ```
 
 You can also install the pre-release by adding the `--pre` option
 
 ```bash
-pip install xxii-libia --pre
+pip install lours --pre
 ```
 
 ### From source
@@ -47,11 +47,11 @@ pip install -e . # Only for pip > 21.3
 
 - `poetry >= 1.2`
 
-Assuming both libia and your project are in the same folder, adapt the relative path of the repo if needed
+Assuming both lours and your project are in the same folder, adapt the relative path of the repo if needed
 
 ```bash
-poetry add --editable ../libia/
-poetry add --editable NEW_GIT_ADDRESS/libia.git
+poetry add --editable ../lours/
+poetry add --editable https://github.com/XXII-AI/lours.git
 ```
 
 ## The dataset object
@@ -61,7 +61,7 @@ See <https://UPDATE-ME>
 ## Usage
 
 ```python
-from libia.dataset import from_caipy, from_coco
+from lours.dataset import from_caipy, from_coco
 dataset1 = from_caipy("path/to/caipy")
 print(dataset1)
 dataset2 = from_coco("path/to/coco", images_root="/path/to/coco_images")

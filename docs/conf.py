@@ -40,7 +40,7 @@ html_logo = "_static/logo.png"
 html_theme_options = {
     "navbar_align": "left",
     "logo": {
-        "text": f"LibIA {release} documentation",
+        "text": f"Lours {release} documentation",
     },
     "icon_links": [
         {

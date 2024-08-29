@@ -1,6 +1,6 @@
 [tool.poetry]
-name = "xxii-libia"
-version = "2.1.1"
+name = "lours"
+version = "0.1.0"
 description = ""
 authors = ["Lilian Glaudin <lilian.glaudin@xxii.fr>",
            "Clément Pinard <mail@clementpinard.fr>",
@@ -8,17 +8,17 @@ authors = ["Lilian Glaudin <lilian.glaudin@xxii.fr>",
            "Nacer Kaci <nacer.kaci@xxii.fr>",
            "Bastien Botrel <bastien.botrel@xxii.fr>"]
 packages = [
-    {include = "libia"}
+    {include = "lours"}
 ]
 license = "MIT"
 readme = "README.md"
 
 [tool.poetry.scripts]
-caipy_to_fiftyone = "libia.cli.caipy_to_fiftyone:run"
-c2f = "libia.cli.caipy_to_fiftyone:run"
+caipy_to_fiftyone = "lours.cli.caipy_to_fiftyone:run"
+c2f = "lours.cli.caipy_to_fiftyone:run"
 
 [tool.poetry.plugins."pytest11"]
-dataset_regressions = "libia.utils.regression_testing"
+dataset_regressions = "lours.utils.regression_testing"
 
 [tool.poetry.dependencies]
 python = ">=3.10, <3.13"
@@ -101,7 +101,7 @@ check-yield-types = false
 [tool.pytest.ini_options]
 doctest_optionflags = ["NORMALIZE_WHITESPACE", "ELLIPSIS"]
 addopts = "--import-mode=importlib --doctest-modules"
-testpaths = ["test_libia", "libia"]
+testpaths = ["test_lours", "lours"]
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

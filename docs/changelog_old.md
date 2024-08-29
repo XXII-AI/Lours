@@ -5,7 +5,7 @@ orphan: true
 # Changelog (archived)
 
 ```{note}
-This CHANGELOG refers to the time this project was maintined internally by XXII.
+This CHANGELOG refers to the time this project was maintained internally by XXII under the name "Libia".
 Since the commit history has been removed for security reasons,
 the chaneglog is kept for informational purpose and should not be modified.
 The new CHANGELOG is [here](changelog.md)

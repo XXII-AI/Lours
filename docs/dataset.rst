@@ -1,7 +1,7 @@
 Dataset
 =======
 
-.. currentmodule:: libia.dataset
+.. currentmodule:: lours.dataset
 
 The Dataset object
 ~~~~~~~~~~~~~~~~~~
