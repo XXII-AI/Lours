@@ -1,7 +1,7 @@
 Evaluation
 ==========
 
-.. currentmodule:: libia.evaluation
+.. currentmodule:: lours.evaluation
 
 
 Evaluator base Class

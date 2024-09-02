@@ -1,9 +1,9 @@
 Utils
 =====
 
-.. currentmodule:: libia.utils
+.. currentmodule:: lours.utils
 
-Tools used in libIA's functions
+Tools used in Lours's functions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. autosummary::
