@@ -118,5 +118,5 @@ intersphinx_mapping = {
     "pandas": ("https://pandas.pydata.org/docs/", None),
     "numpy": ("https://numpy.org/doc/stable/", None),
     "pot": ("https://pythonot.github.io/", None),
-    "fiftyone": ("https://voxel51.com/docs/fiftyone/", None),
+    "fiftyone": ("https://docs.voxel51.com/", None),
 }
