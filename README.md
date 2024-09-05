@@ -73,4 +73,4 @@ print(dataset2)
 
 See some notebooks in folder `docs/notebooks`
 
-Alternatively, See <UPDATE-ME/stable/tutorials>
+Alternatively, See <https://lours.readthedocs.io/stable/tutorials>

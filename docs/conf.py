@@ -121,7 +121,7 @@ autoclass_content = "both"
 autodoc_typehints_format = "short"
 python_use_unqualified_type_names = True
 nbsphinx_allow_errors = True
-nbsphinx_execute = os.getenv("NBSPHINX_EXECUTE", "auto")
+nbsphinx_execute = "auto"
 add_module_names = False
 copybutton_prompt_text = r">>> |\.\.\. |\$ |In \[\d*\]: | {2,5}\.\.\.: | {5,8}: "
 copybutton_prompt_is_regexp = True
@@ -136,11 +136,12 @@ exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ["_static"]
+html_js_files = ["pypi.js"]
 
 intersphinx_mapping = {
     "python": ("https://docs.python.org/3", None),
     "pandas": ("https://pandas.pydata.org/docs/", None),
     "numpy": ("https://numpy.org/doc/stable/", None),
     "pot": ("https://pythonot.github.io/", None),
-    "fiftyone": ("https://docs.voxel51.com/objects.inv", None),
+    "fiftyone": ("https://docs.voxel51.com/", None),
 }
