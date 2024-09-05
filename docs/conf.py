@@ -12,23 +12,15 @@
 #
 import os
 import sys
-from datetime import date
-
-import toml
 
 sys.path.insert(0, os.path.abspath(".."))
+import lours
 
-release = os.getenv("SPHINX_RELEASE", "develop")
-base_url = os.getenv("CI_PAGES_URL")
-version_switcher = os.getenv("VERSION_SWITCHER")
-version_match = os.getenv("VERSION_MATCH")
 
 # -- Project information -----------------------------------------------------
-with open("../pyproject.toml") as f:
-    project_metadata = toml.load(f)
-project = project_metadata["tool"]["poetry"]["name"]
-author = ", ".join(project_metadata["tool"]["poetry"]["authors"])
-copyright = f"{date.today().year}, XXII"
+project = "Lours"
+author = "Lours community"
+copyright = "2024, XXII"
 
 # -- Options for HTML output -------------------------------------------------
 
@@ -37,21 +29,53 @@ copyright = f"{date.today().year}, XXII"
 #
 html_theme = "pydata_sphinx_theme"
 html_logo = "_static/logo.png"
+
+# Define the json_url for our version switcher.
+json_url = "https://lours.readthedocs.io/en/latest/_static/switcher.json"
+
+# Define the version we use for matching in the version switcher.
+version_match = os.environ.get("READTHEDOCS_VERSION")
+release = lours.__version__
+# If READTHEDOCS_VERSION doesn't exist, we're not on RTD
+# If it is an integer, we're in a PR build and the version isn't correct.
+# If it's "latest" → change to "dev" (that's what we want the switcher to call it)
+if not version_match or version_match.isdigit() or version_match == "latest":
+    # For local development, infer the version to match from the package.
+    if "dev" in release or "rc" in release:
+        version_match = "dev"
+        # We want to keep the relative reference if we are in dev mode
+        # but we want the whole url if we are effectively in a released version
+        json_url = "_static/switcher.json"
+    else:
+        version_match = f"v{release}"
+elif version_match == "stable":
+    version_match = f"v{release}"
+
 html_theme_options = {
     "navbar_align": "left",
     "logo": {
-        "text": f"Lours {release} documentation",
+        "text": "Lours documentation",
     },
+    "external_links": [
+        {
+            "url": "https://www.xxiiai.com/",
+            "name": "XXII",
+        }],
     "icon_links": [
         {
-            "name": "GitLab",
-            "url": "UPDATE-ME",
-            "icon": "fa-brands fa-gitlab",
+            "name": "GitHub",
+            "url": "https://github.com/XXII-AI/Lours",
+            "icon": "fa-brands fa-github",
             "type": "fontawesome",
+        },
+        {
+            "name": "PyPI",
+            "url": "https://pypi.org/project/lours/",
+            "icon": "fa-custom fa-pypi",
         },
     ],
     "switcher": {
-        "json_url": f"{base_url}/{version_switcher}",
+        "json_url": json_url,
         "version_match": version_match,
     },
     "check_switcher": False,
