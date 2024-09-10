@@ -6,8 +6,8 @@ A lib to help R&D team with its experiments.
 
 Sphinx docs is available here:
 
-- [stable](UPDATE-ME)
-- [latest](UPDATE-ME)
+- [stable](https://lours.readthedocs.io/stable/)
+- [latest](https://lours.readthedocs.io/latest/)
 
 ## Installation
 
@@ -73,4 +73,4 @@ print(dataset2)
 
 See some notebooks in folder `docs/notebooks`
 
-Alternatively, See <UPDATE-ME/stable/tutorials>
+Alternatively, See <https://lours.readthedocs.io/stable/tutorials>

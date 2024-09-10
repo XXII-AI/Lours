@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Move codebase to github
+- Move doc to readthedocs.io #6
 
 ## Archived changelog
 

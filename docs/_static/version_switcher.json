@@ -2,11 +2,11 @@
   {
     "name": "v0.1.0",
     "version": "0.1.0",
-    "url": "UPDATE-ME/stable/"
+    "url": "https://lours.readthedocs.io/stable/"
   },
   {
     "name": "dev (latest)",
     "version": "dev",
-    "url": "UPDATE-ME/latest/"
+    "url": "https://lours.readthedocs.io/latest/"
   }
 ]
