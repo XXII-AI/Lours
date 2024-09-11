@@ -16,6 +16,7 @@ HERE = Path(__file__).parent
 DATA = HERE.parent / "test_data"
 
 
+@pytest.mark.xdist_group(name="fiftyone-group")
 def test_fiftyone():
     dataset = from_coco(
         coco_json=DATA / "coco_dataset/annotations_valid_random.json",

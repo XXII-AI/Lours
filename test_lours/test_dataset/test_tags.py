@@ -121,6 +121,7 @@ def test_caipy_tags():
     assert result == initial
 
 
+@pytest.mark.xdist_group(name="fiftyone-group")
 def test_caipy_tags_to_fiftyone():
     dataset = from_caipy_generic(
         annotations_folder=DATA / "caipy_dataset" / "tags" / "default_schema",

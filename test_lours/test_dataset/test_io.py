@@ -532,6 +532,7 @@ def test_from_files():
     dataset.check()
 
 
+@pytest.mark.xdist_group(name="fiftyone-group")
 def test_to_fiftyone():
     val_dataset = from_coco(
         coco_json=DATA / "coco_dataset/annotations_valid.json",
@@ -563,6 +564,7 @@ def test_to_fiftyone():
     fo.delete_dataset("dataset")
 
 
+@pytest.mark.xdist_group(name="fiftyone-group")
 def test_to_fiftyone_empty():
     val_dataset = from_coco(
         coco_json=DATA / "coco_dataset/annotations_valid.json",
@@ -578,6 +580,7 @@ def test_to_fiftyone_empty():
     fo.delete_dataset("dataset")
 
 
+@pytest.mark.xdist_group(name="fiftyone-group")
 def test_to_fiftyone_debooleanize():
     dataset = from_caipy_generic(
         annotations_folder=DATA / "caipy_dataset" / "tags" / "default_schema",
@@ -596,6 +599,7 @@ def test_to_fiftyone_debooleanize():
     fo.delete_dataset("dataset")
 
 
+@pytest.mark.xdist_group(name="fiftyone-group")
 def test_to_fiftyone_keypoint():
     dataset = from_coco_keypoints(
         coco_json=DATA / "coco_dataset/annotations_keypoints.json",

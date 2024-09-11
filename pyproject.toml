@@ -61,14 +61,15 @@ scipy= ">=1, <1.14"
 
 
 [tool.poetry.group.test.dependencies]
-pytest = "^7.4.2"
-pycocotools = "^2.0.7"
-pre-commit = "^3.4.0"
-coverage = "^7.3.1"
-pandas-stubs = "^2.1.4.231227"
-pytest-sugar = "^0.9.7"
+pytest = "^8.3.3"
+pycocotools = "^2.0.8"
+pre-commit = "^3.8.0"
+coverage = "^7.6.1"
+pandas-stubs = "^2.2.2.240909"
+pytest-sugar = "^1.0.0"
 ipykernel = "^6.29.0"
 ipywidgets = "^8.0.3"
+pytest-xdist = "^3.6.1"
 
 [tool.poetry.group.docs.dependencies]
 Sphinx = "^7.2.5"

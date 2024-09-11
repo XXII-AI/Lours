@@ -1,0 +1,139 @@
+name: CI
+
+# Concurrency group that uses the workflow name and PR number if available
+# or commit SHA as a fallback. If a new build is triggered under that
+# concurrency group while a previous build is running it will be canceled.
+# Repeated pushes to a PR will cancel all previous builds, while multiple
+# merges to main will not cancel.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}
+  cancel-in-progress: true
+
+env:
+  FORCE_COLOR: "1" # Make tools pretty
+  DEFAULT_PYTHON_VERSION: "3.11" # keep in sync with tox.ini
+  PIP_DISABLE_PIP_VERSION_CHECK: "1" # Don't check for pip updates
+
+permissions: {}
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  # Run our test suite on various combinations of OS & Python versions
+  run-pytest:
+    strategy:
+      fail-fast: true
+      matrix:
+        python-version: ["3.10", "3.11", "3.12"]
+        os: [ubuntu-22.04, ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install poetry
+        uses: abatilo/actions-poetry@v3
+      - name: Setup poetry
+        run: |
+          poetry config virtualenvs.create true --local
+          poetry config virtualenvs.in-project true --local
+      - uses: actions/cache@v3
+        name: Define a cache for the virtual environment based on the dependencies lock file
+        with:
+          path: ./.venv
+          key: venv-${{ hashFiles('pyproject.toml') }}
+      - name: Install the project dependencies
+        run: poetry install --with test
+      - name: Run the test
+        run: COLUMNS=80 poetry run coverage run -m pytest
+      - name: "Upload coverage data to GH artifacts 📤"
+        if: matrix.python-version == '3.11' && matrix.os == 'ubuntu-latest'
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-data
+          path: .coverage
+          if-no-files-found: ignore
+          include-hidden-files: true
+
+  build-site:
+    name: "build docs"
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout repository 🛎"
+        uses: actions/checkout@v4
+      - name: Install poetry
+        uses: abatilo/actions-poetry@v3
+      - name: Setup poetry
+        run: |
+          poetry config virtualenvs.create true --local
+          poetry config virtualenvs.in-project true --local
+      - uses: actions/cache@v3
+        name: Define a cache for the virtual environment based on the dependencies lock file
+        with:
+          path: ./.venv
+          key: venv-${{ hashFiles('pyproject.toml') }}
+      - name: Install the project dependencies
+        run: poetry install --with test
+      - name: "Build docs and check for warnings 📖"
+        shell: bash
+        run: |
+          poetry run sphinx-build docs docs/_build -W
+
+  coverage:
+    name: "Check coverage"
+    needs: run-pytest
+    runs-on: ubuntu-latest
+    # avoid running this on schedule, releases, or workflow_call
+    if: github.event.workflow_run.event != 'schedule' && github.event.workflow_run.event != 'release' && github.event.workflow_run.event != 'workflow_call'
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: "Checkout repository 🛎"
+        uses: actions/checkout@v4
+      - name: "Setup CI environment 🛠"
+        uses: ./.github/actions/set-dev-env
+        with:
+          python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
+      - run: python -Im pip install --upgrade coverage[toml]
+      - name: "Download coverage data 📥"
+        uses: actions/download-artifact@v4
+        with:
+          pattern: coverage-data
+
+      - name: "Get coverage data & fail if it's <80%"
+        run: |
+          # if we decide to check cov across versions and combine
+          # python -Im coverage combine
+          python -Im coverage html --skip-covered --skip-empty
+
+          # report and write to summary.
+          python -Im coverage report --format=markdown >> $GITHUB_STEP_SUMMARY
+
+          # report again and fail if under 80%.
+          python -Im coverage report --fail-under=80
+
+      - name: "Upload HTML report if check failed 📤"
+        uses: actions/upload-artifact@v4
+        with:
+          name: html-report
+          path: htmlcov
+        if: ${{ failure() }}
+
+      # seems we need to call this from the main CI workflow first
+      - name: "Coverage comment 💬"
+        uses: py-cov-action/python-coverage-comment-action@v3
+        id: coverage_comment
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: "Store Pull Request comment to be posted 📤"
+        uses: actions/upload-artifact@v4
+        if: steps.coverage_comment.outputs.COMMENT_FILE_WRITTEN == 'true'
+        with:
+          # leave default names
+          name: python-coverage-comment-action
+          path: python-coverage-comment-action.txt
