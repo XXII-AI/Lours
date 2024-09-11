@@ -23,6 +23,10 @@ def make_fiftyone_compatible(
     Fiftyone is incompatible with names with a ".", so replace them with a proper
     character.
 
+    Fiftyone is also incompatible with names starting with 'attributes', which is the
+    case for libia.Dataset.annotations attributes columns, so we replace the string
+    'attributes' with 'attr' in each column name.
+
     Note:
         If no name in ``column_names`` has a forbidden character, this function simply
         return its inputs.
@@ -43,6 +47,10 @@ def make_fiftyone_compatible(
     if not column_names:
         return input_df, []
     new_column_names = [name.replace(".", replacement_string) for name in column_names]
+    # replace column names containing 'attributes' with 'attr' otherwise the fiftyone
+    # web app will crash if we try to filter on these columns
+    # e.g. "attributes->out_of_frame" will become "attr->out_of_frame" in fiftyone
+    new_column_names = [name.replace("attributes", "attr") for name in new_column_names]
     output = input_df.rename(dict(zip(column_names, new_column_names)), axis=1)
     return output, new_column_names
 
