@@ -16,7 +16,6 @@ import sys
 sys.path.insert(0, os.path.abspath(".."))
 import lours
 
-
 # -- Project information -----------------------------------------------------
 project = "Lours"
 author = "Lours community"
@@ -60,7 +59,8 @@ html_theme_options = {
         {
             "url": "https://www.xxiiai.com/",
             "name": "XXII",
-        }],
+        }
+    ],
     "icon_links": [
         {
             "name": "GitHub",
