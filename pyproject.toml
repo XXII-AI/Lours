@@ -107,3 +107,7 @@ testpaths = ["test_lours", "lours"]
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+# Only measure coverage for the lours package
+[tool.coverage.run]
+source = ["lours"]
