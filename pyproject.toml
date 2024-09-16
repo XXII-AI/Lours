@@ -56,7 +56,7 @@ pytest-regressions = "^2.5.0"
 # Pinning numpy version to be <1 is needed as numpy 2.0 is incompatible with some
 # librairies and they did not constrain the numpy version
 # See https://numpy.org/devdocs/dev/depending_on_numpy.html#numpy-2-abi-handling
-numpy = "^1"
+numpy = "^2.0.0"
 scipy= ">=1, <1.14"
 
 
