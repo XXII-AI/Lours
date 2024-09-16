@@ -29,7 +29,7 @@ PyYAML = "^6.0.1"
 imageio = "^2.31.3"
 imagesize = "^1.4.1"
 POT = "^0.9.1"
-jsonschema-rs = "^0.16.3"
+jsonschema-rs = "^0.18.3"
 scikit-learn = "^1.3.0"
 typing-extensions = "^4.7.1"
 watchdog = "^3.0.0"
@@ -61,14 +61,15 @@ scipy= ">=1, <1.14"
 
 
 [tool.poetry.group.test.dependencies]
-pytest = "^7.4.2"
-pycocotools = "^2.0.7"
-pre-commit = "^3.4.0"
-coverage = "^7.3.1"
-pandas-stubs = "^2.1.4.231227"
-pytest-sugar = "^0.9.7"
+pytest = "^8.3.3"
+pycocotools = "^2.0.8"
+pre-commit = "^3.8.0"
+coverage = "^7.6.1"
+pandas-stubs = "^2.2.2.240909"
+pytest-sugar = "^1.0.0"
 ipykernel = "^6.29.0"
 ipywidgets = "^8.0.3"
+pytest-xdist = "^3.6.1"
 
 [tool.poetry.group.docs.dependencies]
 Sphinx = "^7.2.5"
@@ -106,3 +107,7 @@ testpaths = ["test_lours", "lours"]
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+# Only measure coverage for the lours package
+[tool.coverage.run]
+source = ["lours"]

@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- Github CI, with pytest, codecov, sphinx and pyright #9
+
 ### Changed
 
 - Move codebase to github

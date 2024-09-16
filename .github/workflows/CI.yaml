@@ -1,0 +1,115 @@
+name: CI
+
+# Concurrency group that uses the workflow name and PR number if available
+# or commit SHA as a fallback. If a new build is triggered under that
+# concurrency group while a previous build is running it will be canceled.
+# Repeated pushes to a PR will cancel all previous builds, while multiple
+# merges to main will not cancel.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}
+  cancel-in-progress: true
+
+env:
+  FORCE_COLOR: "1" # Make tools pretty
+
+permissions: {}
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  # Run our test suite on various combinations of OS & Python versions
+  run-pytest:
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11", "3.12"]
+        # test fail on windows for now
+        os: [ubuntu-22.04, ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install poetry
+        uses: abatilo/actions-poetry@v3
+      - name: Setup poetry
+        run: |
+          poetry config virtualenvs.create true --local
+          poetry config virtualenvs.in-project true --local
+      - uses: actions/cache@v4
+        name: Define a cache for the virtual environment based on the dependencies file
+        with:
+          path: |
+            ./.venv
+            poetry.lock
+          key: venv-${{ hashFiles('pyproject.toml') }}-${{ matrix.python-version }}-${{ matrix.os }}
+      - name: Install the project dependencies
+        run: poetry install --with test
+      - name: Run the test
+        run: |
+          poetry run coverage run -m pytest
+          poetry run coverage xml
+      - name: Upload Coverage to Codecov
+        if: matrix.python-version == '3.11' && matrix.os == 'ubuntu-latest'
+        uses: codecov/codecov-action@v4
+        with:
+          fail_ci_if_error: true
+          token: ${{ secrets.CODECOV_TOKEN }}
+
+  build-site:
+    name: "build docs"
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout repository 🛎"
+        uses: actions/checkout@v4
+      - name: Install poetry
+        uses: abatilo/actions-poetry@v3
+      - name: "Install pandoc 📝"
+        uses: r-lib/actions/setup-pandoc@v2
+        with:
+          pandoc-version: "latest"
+      - name: Setup poetry
+        run: |
+          poetry config virtualenvs.create true --local
+          poetry config virtualenvs.in-project true --local
+      - uses: actions/cache@v4
+        name: Define a cache for the virtual environment based on the dependencies lock file
+        with:
+          path: |
+            ./.venv
+            poetry.lock
+          key: venv-${{ hashFiles('pyproject.toml') }}
+      - name: Install the project dependencies
+        run: poetry install --with test
+      - name: "Build docs and check for warnings 📖"
+        shell: bash
+        run: |
+          poetry run sphinx-build docs docs/_build -W
+
+  run-pyright:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install poetry
+        uses: abatilo/actions-poetry@v3
+      - name: Setup poetry
+        run: |
+          poetry config virtualenvs.create true --local
+          poetry config virtualenvs.in-project true --local
+      - uses: actions/cache@v4
+        name: Define a cache for the virtual environment based on the dependencies file
+        with:
+          path: |
+            ./.venv
+            poetry.lock
+          key: venv-${{ hashFiles('pyproject.toml') }}
+      - name: Install the project dependencies
+        run: poetry install --with test
+      - run: echo "$PWD/.venv/bin" >> $GITHUB_PATH
+      - uses: jakebailey/pyright-action@v2
+        name: Run pyright

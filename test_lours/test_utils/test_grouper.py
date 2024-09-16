@@ -61,6 +61,7 @@ def test_make_data_pandas_compatible():
         coco_json=DATA / "coco_eval/instances_val2017.json", images_root=Path(".")
     )
     data = coco.annotations
+    np.random.seed(0)
     data["fake_id"] = np.random.randint(0, 10, len(data))
     data["fake_size"] = np.random.randn(len(data))
     group_name, pandas_group, is_category = grouper.make_pandas_compatible(
@@ -115,6 +116,7 @@ def test_label_types():
         coco_json=DATA / "coco_eval/instances_val2017.json", images_root=Path(".")
     )
     data = coco.annotations
+    np.random.seed(0)
     data["fake_id"] = np.random.randint(0, 10, len(data))
     data["fake_size"] = np.random.randn(len(data))
 
@@ -123,16 +125,16 @@ def test_label_types():
     )[1]
     target = np.array(
         [
-            -3.7345,
-            -2.941,
-            -2.1515,
-            -1.362,
-            -0.5725,
-            0.217,
-            1.0065,
-            1.796,
-            2.5855,
-            3.375,
+            -3.542,
+            -2.74,
+            -1.9415,
+            -1.143,
+            -0.3448,
+            0.4537,
+            1.252,
+            2.0505,
+            2.849,
+            3.647,
         ]
     )
     assert_almost_equal(pandas_group.cat.categories.to_numpy(), target)
@@ -143,16 +145,16 @@ def test_label_types():
 
     target = np.array(
         [
-            -3.57622866,
-            -2.81813268,
-            -2.03869917,
-            -1.29311724,
-            -0.54028369,
-            0.20698126,
-            0.95833345,
-            1.71192913,
-            2.45991059,
-            3.2138484,
+            -3.3643091,
+            -2.5960633,
+            -1.8442534,
+            -1.0818792,
+            -0.3264371,
+            0.4304018,
+            1.1904581,
+            1.9497437,
+            2.7433336,
+            3.4620295,
         ]
     )
     assert_almost_equal(pandas_group.cat.categories.to_numpy(), target)
@@ -163,16 +165,16 @@ def test_label_types():
 
     target = np.array(
         [
-            -3.50361545,
-            -2.76894588,
-            -1.99502576,
-            -1.264642,
-            -0.52548114,
-            0.20053149,
-            0.9358896,
-            1.67847603,
-            2.40298958,
-            3.16176182,
+            -3.28356,
+            -2.5578789,
+            -1.8114079,
+            -1.0532277,
+            -0.3176548,
+            0.4207354,
+            1.1638769,
+            1.907607,
+            2.6944044,
+            3.382559,
         ]
     )
     assert_almost_equal(pandas_group.cat.categories.to_numpy(), target)
