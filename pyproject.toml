@@ -72,7 +72,7 @@ ipywidgets = "^8.0.3"
 pytest-xdist = "^3.6.1"
 
 [tool.poetry.group.docs.dependencies]
-Sphinx = "^7.2.5"
+Sphinx = "^8.0.0"
 pydata-sphinx-theme = "^0.15.2"
 myst-parser = "^4.0.0"
 jupyter = "^1.0.0"
