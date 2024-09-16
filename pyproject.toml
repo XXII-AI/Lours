@@ -74,7 +74,7 @@ pytest-xdist = "^3.6.1"
 [tool.poetry.group.docs.dependencies]
 Sphinx = "^7.2.5"
 pydata-sphinx-theme = "^0.15.2"
-myst-parser = "^2.0.0"
+myst-parser = "^4.0.0"
 jupyter = "^1.0.0"
 seaborn = "^0.13.0"
 nbsphinx = "^0.9.3"
