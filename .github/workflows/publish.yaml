@@ -5,6 +5,7 @@ name: Publish to PyPI
 on:
   push:
     tags:
+      - '*'
 
 
 permissions:
@@ -14,6 +15,7 @@ jobs:
   # calls our general CI workflow (tests, build docs, etc.)
   tests:
     uses: ./.github/workflows/CI.yaml
+    secrets: inherit
 
   build-package:
     name: "Build & verify 🐻 Lours package"
