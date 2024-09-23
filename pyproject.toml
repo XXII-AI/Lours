@@ -35,7 +35,7 @@ typing-extensions = "^4.7.1"
 watchdog = "^5.0.0"
 toml = "^0.10.2"
 shortuuid = "^1.0.11"
-faker = "^28.0.0"
+faker = "^29.0.0"
 fiftyone = "^0.25"
 # MongoDB is not easy to get on ubuntu22.04
 # See https://docs.voxel51.com/getting_started/troubleshooting.html#alternative-linux-builds
