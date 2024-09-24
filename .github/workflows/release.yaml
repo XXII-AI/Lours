@@ -5,6 +5,9 @@ on:
     # tags in the form A.B.C where A B and C are only numbers. It won't trigger for pre-release tags.
       - '[0-9]+.[0-9]+.[0-9]+'
 
+permissions:
+  contents: write
+
 name: Create Release
 
 jobs:
@@ -15,7 +18,7 @@ jobs:
       - name: Get version from tag
         id: tag_name
         run: |
-          echo "current_version=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+          echo "current_version=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
         shell: bash
       - name: Checkout code
         uses: actions/checkout@v4
