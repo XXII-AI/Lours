@@ -30,7 +30,7 @@ html_theme = "pydata_sphinx_theme"
 html_logo = "_static/logo.png"
 
 # Define the json_url for our version switcher.
-json_url = "https://lours.readthedocs.io/en/latest/_static/switcher.json"
+json_url = "https://lours.readthedocs.io/latest/_static/switcher.json"
 
 # Define the version we use for matching in the version switcher.
 version_match = os.environ.get("READTHEDOCS_VERSION")
