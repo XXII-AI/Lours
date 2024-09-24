@@ -3,7 +3,7 @@
 [![codecov](https://img.shields.io/codecov/c/gh/XXII-AI/lours?logo=codecov&color=cyan)](https://codecov.io/gh/XXII-AI/Lours) ![GitHub License](https://img.shields.io/github/license/XXII-AI/Lours?color=violet&logo=license) ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/lours?logo=python)
  ![PyPI - Version](https://img.shields.io/pypi/v/lours?logo=pypi) ![PyPI - Downloads](https://img.shields.io/pypi/dm/lours?color=yellow) ![Read the Docs](https://img.shields.io/readthedocs/lours?logo=readthedocs&color=orange)
 
-![logo lours](docs/_static/logo-title-readme.png)
+![logo lours](https://github.com/XXII-AI/Lours/raw/main/docs/_static/logo-title-readme.png)
 
 Lours, the pandas companion
 
