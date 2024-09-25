@@ -43,7 +43,7 @@ repos:
     additional_dependencies:
     - tomli
 - repo: https://github.com/jsh9/pydoclint
-  rev: 0.5.7
+  rev: 0.5.8
   hooks:
   - id: pydoclint
     args:
