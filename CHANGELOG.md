@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+
+- Add requests dependency to the non-extra package because it is imported by
+`schema_utils_functions.py` but is only installed with the extra fiftyone #22
+
 ## [1.0.0] - 2024-09-24
 
 ### Added
