@@ -57,7 +57,7 @@ pytest-regressions = "^2.5.0"
 # librairies and they did not constrain the numpy version
 # See https://numpy.org/devdocs/dev/depending_on_numpy.html#numpy-2-abi-handling
 numpy = "^1"
-scipy= ">=1, <1.14"
+scipy= ">=1, <1.15"
 requests= "^2"
 
 [tool.poetry.group.test.dependencies]
