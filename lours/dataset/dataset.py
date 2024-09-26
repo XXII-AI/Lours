@@ -1003,15 +1003,11 @@ class Dataset:
             missing_ids = all_cat_ids - self.label_map.keys()
             warn(
                 "Incomplete Label map, setting following label of the following id to"
-                f" their string equivalent : {missing_ids}"
+                f" their string equivalent : {missing_ids}",
+                RuntimeWarning,
             )
             for i in missing_ids:
-                try:
-                    value = i.item()
-                # In case its a numpy scalar, convert it to its regular python type
-                except (ValueError, AttributeError):
-                    value = i
-                self.label_map[value] = str(value)
+                self.label_map[i.item()] = str(i)
 
         self.annotations["category_str"] = (
             self.annotations["category_id"].astype(object).replace(self.label_map)
@@ -1808,7 +1804,7 @@ class Dataset:
             {4: 'especially', 19: 'similar', 24: 'film'}
         """
         if "split" not in self.images.columns:
-            warn("Dataset has no split value")
+            warn("Dataset has no split value", RuntimeWarning)
             return self.loc[[]]
         if split is not None:
             split_image_ids = self.images["split"] == split

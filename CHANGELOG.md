@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Changed
+
+- Removed unnecessary verion pins #35
+- Changed code to be compatible with numpy 2.0 #35
+
 ### Fixed
 
 - Add requests dependency to the non-extra package because it is imported by
