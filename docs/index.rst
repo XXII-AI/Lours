@@ -1,4 +1,4 @@
-Welcome to Lours's documentation!
+Welcome to Lours documentation!
 =================================
 
 .. image:: _static/logo-title.png
