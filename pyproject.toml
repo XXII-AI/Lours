@@ -22,7 +22,7 @@ dataset_regressions = "lours.utils.regression_testing"
 
 [tool.poetry.dependencies]
 python = ">=3.10, <3.13"
-pandas = "^2.2.2"
+pandas = "^2.2.3"
 pyarrow = "^17.0.0"
 tqdm = "^4.64"
 PyYAML = "^6.0.1"
@@ -36,12 +36,8 @@ watchdog = "^5.0.0"
 toml = "^0.10.2"
 shortuuid = "^1.0.11"
 faker = "^29.0.0"
+requests= "^2"
 fiftyone = "^0.25"
-# MongoDB is not easy to get on ubuntu22.04
-# See https://docs.voxel51.com/getting_started/troubleshooting.html#alternative-linux-builds
-# See also https://github.com/voxel51/fiftyone/issues/3236 to keep track of the utility
-# of this workaround package in the future
-fiftyone-db-ubuntu2204 = { version = "^0.4.0", platform = "linux" }
 
 # Pinning boto3 is needed because of fiftyone's dependencies
 # because Boto3/botocore has way too much different versions.
@@ -53,12 +49,6 @@ fiftyone-db-ubuntu2204 = { version = "^0.4.0", platform = "linux" }
 boto3 = "1.26.83"
 xmltodict = "^0.13.0"
 pytest-regressions = "^2.5.0"
-# Pinning numpy version to be <1 is needed as numpy 2.0 is incompatible with some
-# librairies and they did not constrain the numpy version
-# See https://numpy.org/devdocs/dev/depending_on_numpy.html#numpy-2-abi-handling
-numpy = "^1"
-scipy= ">=1, <1.14"
-requests= "^2"
 
 [tool.poetry.group.test.dependencies]
 pytest = "^8.3.3"

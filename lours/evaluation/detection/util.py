@@ -239,7 +239,7 @@ def pr_curve(
     precision = tp_count / (1 + distinct_value_indices.nonzero()[0])
     # In the degenerate case of no targets to be detected, the recall cannot be computed
     # Hence the NaN
-    recall = tp_count / ntargets if ntargets > 0 else tp_count * np.NaN
+    recall = tp_count / ntargets if ntargets > 0 else tp_count * np.nan
 
     # Add 2 points for each extreme
     # Precision will not be above first value,

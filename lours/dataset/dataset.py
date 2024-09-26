@@ -1006,7 +1006,12 @@ class Dataset:
                 f" their string equivalent : {missing_ids}"
             )
             for i in missing_ids:
-                self.label_map[i] = str(i)
+                try:
+                    value = i.item()
+                # In case its a numpy scalar, convert it to its regular python type
+                except (ValueError, AttributeError):
+                    value = i
+                self.label_map[value] = str(value)
 
         self.annotations["category_str"] = (
             self.annotations["category_id"].astype(object).replace(self.label_map)
