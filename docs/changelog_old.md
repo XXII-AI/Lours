@@ -63,7 +63,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `Dataset.remove_empty_images` now keeps the dataset name
 - add docs for darknet IO
 - Suppress some FutureWarning from pandas during tests
-- fix bug for caipy when split is `pd.NA` instead of `None` or `np.NaN`
+- fix bug for caipy when split is `pd.NA` instead of `None` or `np.nan`
 - fix bug when loading caipy with `splits_to_read` set to non existing splits
 - Code spelling
 
