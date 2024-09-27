@@ -1,11 +1,10 @@
 from pathlib import Path
 
 import pytest
-from pathlib import Path
 
+from lours.dataset import Dataset
 from lours.utils.doc_utils import dummy_dataset
 from lours.utils.testing import assert_dataset_equal
-from lours.dataset import Dataset
 
 
 def test_empty_constructor():
