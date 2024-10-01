@@ -37,7 +37,7 @@ toml = "^0.10.2"
 shortuuid = "^1.0.11"
 faker = "^29.0.0"
 requests= "^2"
-fiftyone = "^0.25"
+fiftyone = "^1.0.0"
 
 # Pinning boto3 is needed because of fiftyone's dependencies
 # because Boto3/botocore has way too much different versions.
