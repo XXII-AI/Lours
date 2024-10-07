@@ -64,5 +64,5 @@ repos:
   hooks:
   - id: blackdoc
     additional_dependencies:
-    - black==24.8.0
+    - black==24.10.0
   - id: blackdoc-autoupdate-black
