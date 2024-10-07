@@ -19,14 +19,12 @@ A clear and concise description of what you want to happen.
 - Especially, if you can, explain how you would like the code to be with an example.
 - If you already have an idea of how to implement the solution, don't hesitate to share pointers here
 
-
 Example
 > The ideal solution would look like this
 > ```python
 > my_dataset = my_dataset.resize(size=(220,220))
 > my_dataset.to_caipy(output_folder)
 > ```
-
 
 **Additional context**
 Add any other context or screenshots about the feature request here.
