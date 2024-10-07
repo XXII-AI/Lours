@@ -53,7 +53,7 @@ pytest-regressions = "^2.5.0"
 [tool.poetry.group.test.dependencies]
 pytest = "^8.3.3"
 pycocotools = "^2.0.8"
-pre-commit = "^3.8.0"
+pre-commit = "^4.0.0"
 coverage = "^7.6.1"
 pandas-stubs = "^2.2.2.240909"
 pytest-sugar = "^1.0.0"
