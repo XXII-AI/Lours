@@ -47,7 +47,7 @@ fiftyone = "^1.0.0"
 # See related issue on fiftyone :
 # https://github.com/voxel51/fiftyone/issues/3145
 boto3 = "1.26.83"
-xmltodict = "^0.13.0"
+xmltodict = "^0.14.0"
 pytest-regressions = "^2.5.0"
 
 [tool.poetry.group.test.dependencies]
