@@ -21,7 +21,7 @@ c2f = "lours.cli.caipy_to_fiftyone:run"
 dataset_regressions = "lours.utils.regression_testing"
 
 [tool.poetry.dependencies]
-python = ">=3.10, <3.13"
+python = ">=3.13, <3.14"
 pandas = "^2.2.3"
 pyarrow = "^17.0.0"
 tqdm = "^4.64"
