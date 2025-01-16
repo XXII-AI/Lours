@@ -23,7 +23,7 @@ dataset_regressions = "lours.utils.regression_testing"
 [tool.poetry.dependencies]
 python = ">=3.10, <3.13"
 pandas = "^2.2.3"
-pyarrow = "^17.0.0"
+pyarrow = "^19.0.0"
 tqdm = "^4.64"
 PyYAML = "^6.0.1"
 imageio = "^2.31.3"
