@@ -35,7 +35,7 @@ typing-extensions = "^4.7.1"
 watchdog = "^5.0.0"
 toml = "^0.10.2"
 shortuuid = "^1.0.11"
-faker = "^29.0.0"
+faker = "^36.0.0"
 requests= "^2"
 fiftyone = "^1.0.0"
 
