@@ -70,6 +70,7 @@ def booleanize(
         if enum is None:
             enum = set().union(*input_df[column_name].dropna().to_list())
         column_name_index = input_df.columns.get_loc(column_name)
+        assert isinstance(column_name_index, int)
         before_columns = input_df.columns[:column_name_index]
         after_columns = input_df.columns[column_name_index + 1 :]
         new_columns = []

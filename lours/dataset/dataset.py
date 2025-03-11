@@ -3555,7 +3555,12 @@ class Dataset:
             self.annotations["category_id"].isin(class_mapping)
         ]
         # Replace both id and class in annotation dataframe
-        new_annotations = new_annotations.replace({"category_id": class_mapping})
+        # Note that the ignore is probably caused by a bug.
+        # See https://github.com/pandas-dev/pandas-stubs/issues/1161
+        # See https://github.com/microsoft/pyright/issues/10057
+        new_annotations = new_annotations.replace(
+            {"category_id": class_mapping}  # pyright: ignore
+        )
         new_annotations["category_str"] = new_annotations["category_id"].map(
             new_label_map
         )
