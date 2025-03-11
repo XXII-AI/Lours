@@ -77,8 +77,8 @@ def booleanize(
             booleanized_column_name = f"{column_name}{separator}{v}"
             input_df = input_df.assign(
                 **{
-                    booleanized_column_name: input_df[column_name].apply(
-                        partial(is_true, value=v)
+                    booleanized_column_name: (
+                        input_df[column_name].apply(partial(is_true, value=v))
                     )
                 }
             )
