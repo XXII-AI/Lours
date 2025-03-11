@@ -255,7 +255,7 @@ def hist_distance(
             assert isinstance(axis, str)
             by_cat_count = left_right.groupby(axis, observed=True).sum()
             axis_entropy = entropy(
-                by_cat_count["left"].values, by_cat_count["right"].values
+                by_cat_count["left"].to_numpy(), by_cat_count["right"].to_numpy()
             )
             kl_div += weight * axis_entropy
 

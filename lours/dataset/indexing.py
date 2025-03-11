@@ -110,8 +110,12 @@ class DatasetAnnotLocator(Generic[D]):
             already_empty_images_ids = self.dataset.images.index[
                 already_empty_images
             ].tolist()
+            remaining_images = new_annotations["image_id"].unique().tolist()
             new_images = self.dataset.images.loc[
-                already_empty_images_ids + new_annotations["image_id"].unique().tolist()
+                [
+                    *already_empty_images_ids,
+                    *remaining_images,
+                ]
             ]
         else:
             new_images = self.dataset.images

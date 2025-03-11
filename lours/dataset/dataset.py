@@ -3567,9 +3567,8 @@ class Dataset:
         if remove_emptied_images:
             already_empty_images = ~self.images.index.isin(self.annotations["image_id"])
             already_empty_images_ids = self.images.index[already_empty_images].tolist()
-            new_images = self.images.loc[
-                already_empty_images_ids + new_annotations["image_id"].unique().tolist()
-            ]
+            remaining_images = new_annotations["image_id"].unique().tolist()
+            new_images = self.images.loc[[*already_empty_images_ids, *remaining_images]]
         else:
             new_images = self.images
 
