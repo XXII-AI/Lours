@@ -8,7 +8,7 @@ from warnings import warn
 import numpy as np
 import pandas as pd
 from imageio.v3 import imread, imwrite
-from jsonschema_rs import JSONSchema
+from jsonschema_rs import validator_for
 from tqdm.auto import tqdm
 
 from lours.dataset import Dataset
@@ -45,7 +45,7 @@ def load_caipy_annot_folder(
     images = []
     annotations_files = list(folder_path.glob("**/*.json"))
     if schema is not None:
-        validator = JSONSchema(schema)
+        validator = validator_for(schema)
     else:
         validator = None
     for annot_file in tqdm(annotations_files):
@@ -397,7 +397,7 @@ def split_to_caipy(
             path. Defaults to True
     """
     if schema is not None:
-        validator = JSONSchema(schema)
+        validator = validator_for(schema)
     else:
         validator = None
     # Get back to the list of 4 elements format
