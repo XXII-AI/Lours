@@ -37,7 +37,7 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - name: Install poetry
-        uses: abatilo/actions-poetry@v3
+        uses: abatilo/actions-poetry@v4
       - name: Setup poetry
         run: |
           poetry config virtualenvs.create true --local
@@ -69,7 +69,7 @@ jobs:
       - name: "Checkout repository 🛎"
         uses: actions/checkout@v4
       - name: Install poetry
-        uses: abatilo/actions-poetry@v3
+        uses: abatilo/actions-poetry@v4
       - name: "Install pandoc 📝"
         uses: r-lib/actions/setup-pandoc@v2
         with:
@@ -97,7 +97,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Install poetry
-        uses: abatilo/actions-poetry@v3
+        uses: abatilo/actions-poetry@v4
       - name: Setup poetry
         run: |
           poetry config virtualenvs.create true --local
