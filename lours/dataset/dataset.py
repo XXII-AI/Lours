@@ -3555,16 +3555,20 @@ class Dataset:
             self.annotations["category_id"].isin(class_mapping)
         ]
         # Replace both id and class in annotation dataframe
-        new_annotations = new_annotations.replace({"category_id": class_mapping})
+        # Note that the ignore is probably caused by a bug.
+        # See https://github.com/pandas-dev/pandas-stubs/issues/1161
+        # See https://github.com/microsoft/pyright/issues/10057
+        new_annotations = new_annotations.replace(
+            {"category_id": class_mapping}  # pyright: ignore
+        )
         new_annotations["category_str"] = new_annotations["category_id"].map(
             new_label_map
         )
         if remove_emptied_images:
             already_empty_images = ~self.images.index.isin(self.annotations["image_id"])
             already_empty_images_ids = self.images.index[already_empty_images].tolist()
-            new_images = self.images.loc[
-                already_empty_images_ids + new_annotations["image_id"].unique().tolist()
-            ]
+            remaining_images = new_annotations["image_id"].unique().tolist()
+            new_images = self.images.loc[[*already_empty_images_ids, *remaining_images]]
         else:
             new_images = self.images
 

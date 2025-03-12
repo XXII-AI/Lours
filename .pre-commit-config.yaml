@@ -14,7 +14,7 @@ repos:
   - id: check-yaml
     exclude: .gitlab-ci.yml
 - repo: https://github.com/astral-sh/ruff-pre-commit
-  rev: v0.6.9
+  rev: v0.9.10
   hooks:
   - id: ruff
     args:
@@ -23,7 +23,7 @@ repos:
     - --target-version=py310
     - --extend-select=UP,I
 - repo: https://github.com/psf/black-pre-commit-mirror
-  rev: 24.10.0
+  rev: 25.1.0
   hooks:
   - id: black
     args:
@@ -43,7 +43,7 @@ repos:
     additional_dependencies:
     - tomli
 - repo: https://github.com/jsh9/pydoclint
-  rev: 0.5.9
+  rev: 0.6.2
   hooks:
   - id: pydoclint
     args:
@@ -52,7 +52,7 @@ repos:
     - -athd=False
     - -crt=False
 - repo: https://github.com/igorshubovych/markdownlint-cli
-  rev: v0.42.0
+  rev: v0.44.0
   hooks:
   - id: markdownlint
     args:
@@ -64,5 +64,5 @@ repos:
   hooks:
   - id: blackdoc
     additional_dependencies:
-    - black==24.10.0
+    - black==25.1.0
   - id: blackdoc-autoupdate-black

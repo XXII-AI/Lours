@@ -22,8 +22,7 @@ dataset_regressions = "lours.utils.regression_testing"
 
 [tool.poetry.dependencies]
 python = ">=3.10, <3.13"
-pandas = "^2.2.3"
-pyarrow = "^17.0.0"
+pandas = {version = "^2", extras = ["parquet"]}
 tqdm = "^4.64"
 PyYAML = "^6.0.1"
 imageio = "^2.31.3"
@@ -55,7 +54,7 @@ pytest = "^8.3.3"
 pycocotools = "^2.0.8"
 pre-commit = "^4.0.0"
 coverage = "^7.6.1"
-pandas-stubs = "^2.2.2.240909"
+pandas-stubs = "^2.2.3.250308"
 pytest-sugar = "^1.0.0"
 ipykernel = "^6.29.0"
 ipywidgets = "^8.0.3"
