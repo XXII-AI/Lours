@@ -48,6 +48,7 @@ pytest-regressions = "^2.5.0"
 # See related issue on fiftyone :
 # https://github.com/voxel51/fiftyone/issues/3145
 boto3 = "1.26.83"
+networkx = "^3.4.2"
 
 [tool.poetry.group.test.dependencies]
 pytest = "^8.3.3"

@@ -1,109 +1,9 @@
 import warnings
 from collections import defaultdict
-from collections.abc import Iterable, Sequence
-from dataclasses import dataclass
+from collections.abc import Iterable
 
+import networkx as nx
 import pandas as pd
-
-
-@dataclass
-class IndexedSet:
-    """Class representing a set with a corresponding list of indexes indicating what
-    sets in the initial list where used to construct this one. In other word, there's
-    an original list of sets and the union of all sets indexed make up the current
-    set.
-    """
-
-    index: set[int]
-    """index $i$ of sets $S_i$ that were used when constructing this set.
-    """
-
-    merged_set: set
-    r"""
-    Resulting set.
-
-    .. math::
-        S = \bigcup_{i \in \text{index}} S_i
-    """
-
-    def union(self, *others: "IndexedSet") -> "IndexedSet":
-        r"""Perform the union operation. union operation is applied on both index sets
-        and the sets themselves.
-
-        Args:
-            *others: Iterable of $n$ other indexed sets :math:`(S_i, \text{index}_i)`
-                to perform the union operation
-
-        Returns:
-            new indexed set with
-
-            .. math::
-
-                \text{index} &= \text{index}_1 \cup \text{index}_2 \cup \cdots
-                  \cup \text{index_n} \\
-                S &= S_1 \cup S_2 \cup \cdots \cup S_n
-        """
-        return IndexedSet(
-            self.index.union(*[o.index for o in others]),
-            self.merged_set.union(*[o.merged_set for o in others]),
-        )
-
-    def is_disjoint(self, other: "IndexedSet") -> bool:
-        """Tell if the intersection between current index set and another one is empty
-        or not
-
-        Args:
-            other: other indexed set that we want the intersection with
-
-        Returns:
-            True if intersection is empty, False otherwise
-        """
-        return self.merged_set.intersection(other.merged_set) == set()
-
-
-def factorize_sets(input_sets: Sequence[set]) -> list[list[int]]:
-    r"""From an index-able sequence of sets, partition all possible values in factor
-    sets so that two elements in a particular factor set can be linked with a sequence
-    of input sets with a non-null intersection.
-
-
-    .. math::
-
-        \widehat{S} = \bigcup_i S_i \in input sets
-
-        \forall x,y \in \widehat{S} , \exists i_0 , i_1, \cdots , i_n,
-          x \in S_{i_0}, y \in S_{i_n}, \forall j,
-          S_{i_j} \cap S_{i_{j+1}} \neq \emptyset
-
-
-    Args:
-        input_sets: sequence of sets with possible overlapping values that need to be
-            factorized.
-
-
-    Returns:
-       list of set indices for each factor. That is, the index in the input sets
-       sequence to recreate the factor sets with a union operation.
-    """
-    indexed_input_sets = [
-        IndexedSet({i}, current_set) for i, current_set in enumerate(input_sets)
-    ]
-    merged_indices = []
-    while indexed_input_sets:
-        first_id_set, *remaining = indexed_input_sets
-        to_merge, to_keep = [], []
-        for id_set in remaining:
-            (
-                to_keep.append(id_set)
-                if first_id_set.is_disjoint(id_set)
-                else to_merge.append(id_set)
-            )
-        if not to_merge:
-            merged_indices.append(first_id_set.index)
-            indexed_input_sets = remaining
-            continue
-        indexed_input_sets = [first_id_set.union(*to_merge)] + to_keep
-    return merged_indices
 
 
 def give_already_assigned(
@@ -178,35 +78,25 @@ def make_atomic_chunks(
     """
     if not groups:
         return give_already_assigned(data, split_column, split_names)
-    else:
-        # Reorder groups so that the first group to use groupby method on is the one
-        # with the smallest number of unique values
-        def group_sort_key(group):
-            if isinstance(group, str):
-                return len(data[group].unique())
-            else:
-                return len(group.unique())
-
-        groups = sorted(groups, key=group_sort_key)
-        df_list = [
-            df
-            for _, df in data.groupby(
-                groups[0], as_index=False, dropna=False, observed=True
-            )
-        ]
-        if len(groups) > 1:
-            for g in groups[1:]:
-                unique_values = [
-                    set(df[g].unique()) if isinstance(g, str) else set(g.unique())
-                    for df in df_list
-                ]
-                clusters = factorize_sets(unique_values)
-                new_df_list = []
-                for cluster in clusters:
-                    new_df_list.append(pd.concat([df_list[i] for i in cluster]))
-                df_list = new_df_list
-    unassigned = []
-    already_assigned = defaultdict(list)
+    # Reorder groups so that the first group to use groupby method on is the one
+    # with the smallest number of unique values
+    groups_as_series = [
+        data[group] if isinstance(group, str) else group for group in groups
+    ]
+    chunks_graph = nx.Graph()
+    for group in groups_as_series:
+        for _, df in data.groupby(group, as_index=False, dropna=True, observed=True):
+            nx.add_path(chunks_graph, df.index)
+    chunk_indexes = list(nx.connected_components(chunks_graph))
+    df_list = [data.loc[list(chunk_index)] for chunk_index in chunk_indexes]
+    not_in_chunks = data.loc[list(set(data.index) - set(chunks_graph))]
+    # Search for chunks with already assigned split values.
+    unassigned, already_assigned = give_already_assigned(
+        data=not_in_chunks, split_column=split_column, split_names=split_names
+    )
+    already_assigned_chunks = defaultdict(list)
+    for name, split in already_assigned.items():
+        already_assigned_chunks[name].append(split)
     if split_column in data.columns:
         for df in df_list:
             split_names = [
@@ -224,13 +114,13 @@ def make_atomic_chunks(
                 unassigned.append(df)
             elif len(split_names) == 1:
                 split_name = split_names[0]
-                df["split"] = split_name
-                already_assigned[split_name].append(df)
+                df[split_column] = split_name
+                already_assigned_chunks[split_name].append(df)
             else:
                 unassigned.append(df)
     else:
-        unassigned = df_list
-    already_assigned = {
-        name: pd.concat(split) for name, split in already_assigned.items()
+        unassigned.extend(df_list)
+    already_assigned_chunks = {
+        name: pd.concat(split) for name, split in already_assigned_chunks.items()
     }
-    return unassigned, already_assigned
+    return unassigned, already_assigned_chunks
