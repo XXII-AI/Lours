@@ -57,7 +57,7 @@ jobs:
           poetry run coverage xml
       - name: Upload Coverage to Codecov
         if: matrix.python-version == '3.11' && matrix.os == 'ubuntu-latest'
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v5
         with:
           fail_ci_if_error: true
           token: ${{ secrets.CODECOV_TOKEN }}
