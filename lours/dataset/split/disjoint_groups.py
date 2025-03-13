@@ -52,11 +52,13 @@ def make_atomic_chunks(
     can make the chain :math:`(A, B) \rightarrow (A, D) \rightarrow (C, D)`, which
     means the three rows will be in the same chunk.
 
-    Note:
-        In the case the data has a ``split`` column with non NaN values, the
-        corresponding rows and the chunk they are linked to will be completely assigned
-        to that split. However, it will raise an error if a theoretically indivisible
-        chunk has rows with different split values.
+    Notes:
+        - In the case the data has a ``split`` column with non NaN values, the
+          corresponding rows and the chunk they are linked to will be completely
+          assigned to that split. However, it will be completely unassigned if a
+          theoretically indivisible chunk has rows with different split values.
+        - NaN, None or NA values are considered a unique group value, different from
+          all other values, NaN or not. This is thus equivalent to having e.g. a UUID.
 
     Args:
         data: DataFrame to be split into dissociated chunks.
@@ -71,10 +73,14 @@ def make_atomic_chunks(
             be considered unassigned.
 
     Returns:
-        1. List of DataFrames corresponding to the dissociated chunks. concatenating the
-           returned DataFrames would end up in the input DataFrame.
-        2. dictionary with already assigned atomic chunk, because the "split" value was
-           already filled in at least one of the rows
+        Tuple with 2 elements:
+
+        - List of DataFrames corresponding to the dissociated chunks.
+        - Dictionary with already assigned atomic chunk, because the "split" value was
+          already filled in at least one of the rows
+
+        concatenating the returned DataFrames in the list and the dictionary values
+        would end up in the input DataFrame.
     """
     if not groups:
         return give_already_assigned(data, split_column, split_names)
