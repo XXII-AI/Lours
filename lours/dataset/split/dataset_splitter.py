@@ -187,9 +187,9 @@ def simple_split_dataframe(
         already_assigned = input_data["split"].value_counts()
         split = input_data["split"] if inplace else input_data["split"].copy()
         for split_name, value in already_assigned.items():
-            try:
+            if split_name in split_sizes.index:
                 split_sizes[split_name] = value
-            except KeyError:
+            else:
                 # Split name not wanted, we reset it
                 split.loc[split == split_name] = None
 

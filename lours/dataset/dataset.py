@@ -4611,9 +4611,7 @@ class Dataset:
         keep_separate_groups = groups_to_list(keep_separate_groups)
         keep_balanced_groups = groups_to_list(keep_balanced_groups)
 
-        if keep_balanced_groups_weights is None:
-            keep_balanced_groups_weights = [1] * len(keep_balanced_groups)
-        else:
+        if keep_balanced_groups_weights is not None:
             keep_balanced_groups_weights = [*keep_balanced_groups_weights]
 
         keep_balanced_group_names = get_group_names(keep_balanced_groups)
@@ -4626,9 +4624,13 @@ class Dataset:
         keep_balanced_image_groups = [
             keep_balanced_groups[i] for i in keep_balanced_image_groups_indices
         ]
-        keep_balanced_image_groups_weights = [
-            keep_balanced_groups_weights[i] for i in keep_balanced_image_groups_indices
-        ]
+        if keep_balanced_groups_weights is not None:
+            keep_balanced_image_groups_weights = [
+                keep_balanced_groups_weights[i]
+                for i in keep_balanced_image_groups_indices
+            ]
+        else:
+            keep_balanced_image_groups_weights = None
 
         keep_separate_group_names = get_group_names(keep_separate_groups)
         keep_separate_image_groups = [
@@ -4672,8 +4674,6 @@ class Dataset:
         )
 
         if inplace:
-            self.images = splitted_images
-            self.annotations = splitted_annotations
             return self
 
         return self.from_template(
