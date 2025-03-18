@@ -7,12 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Changed
+
+- Fix a bug in splitting were already assigned split values were discarded #74
+
+### Added
+
+- Add taking into account already assigned values when doing simple split #74
+
 ## [1.1.0] - 2025-03-13
 
 ### Changed
 
 - Use networkx for chunk division for dataset splitting #71
-- Make chunk division compatible with NaN values # 71
+- Make chunk division compatible with NaN values #71
 
 ## [1.0.1] - 2025-03-12
 
