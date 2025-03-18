@@ -22,7 +22,7 @@ from ..utils.column_booleanizer import booleanize, debooleanize, get_bool_column
 from ..utils.grouper import get_group_names, group_list, groups_to_list
 from ..utils.label_map_merger import IncompatibleLabelMapsError
 from ..utils.parquet_saver import dict_to_parquet
-from .split.dataset_splitter import split_dataframe
+from .split.dataset_splitter import simple_split_dataframe, split_dataframe
 
 if TYPE_CHECKING:
     import fiftyone as fo
@@ -4369,30 +4369,17 @@ class Dataset:
             valid    0.275
             Name: count, dtype: float64
         """
-        if len(split_names) <= 1:
-            raise ValueError(
-                f"Must provide at least 2 split names. Got {split_names} of size"
-                f" {len(split_names)} instead."
-            )
-        if len(target_split_shares) != len(split_names):
-            raise ValueError(
-                "Size mismatch between 'split_names' and 'split_shares'"
-                f" ({len(split_names)} vs {len(target_split_shares)})"
-            )
-        if sum(target_split_shares) != 1:
-            raise ValueError(
-                "Split share values must addup to 1. Got"
-                f" {sum(target_split_shares)} instead"
-            )
-        gen = np.random.default_rng(input_seed)
-        split = gen.choice(
-            list(split_names), size=len(self), p=list(target_split_shares)
+        splitted_images = simple_split_dataframe(
+            self.images,
+            input_seed=input_seed,
+            split_names=split_names,
+            target_split_shares=target_split_shares,
+            inplace=inplace,
         )
         if inplace:
-            self.images["split"] = split
             return self
         else:
-            return self.from_template(images=self.images.assign(split=split))
+            return self.from_template(images=splitted_images)
 
     def split(
         self,
@@ -4531,7 +4518,7 @@ class Dataset:
             1 chunks to distribute across 2 splits
             Splitting images ...
             Separating input data into atomic chunks
-            10 chunks to distribute across 2 splits
+            9 chunks to distribute across 2 splits
             >>> splitted
             Dataset object containing 200 images and 2 objects
             Name :
@@ -4547,8 +4534,8 @@ class Dataset:
             3      840     384        like/safe.bmp   .bmp  train  anything   likely
             4      953     668      suffer/set.jpeg  .jpeg  train  training   attack
             ..     ...     ...                  ...    ...    ...       ...      ...
-            195    122     437    state/almost.tiff  .tiff  valid  anything     star
-            196    752     300     weight/tend.jpeg  .jpeg  train     could     rest
+            195    122     437    state/almost.tiff  .tiff  train  anything     star
+            196    752     300     weight/tend.jpeg  .jpeg  valid     could     rest
             197    554     228  remember/summer.png   .png  train  anything   system
             198    688     605       yet/though.png   .png  train      note   number
             199    243     227   describe/road.tiff  .tiff  train       end   number
@@ -4565,66 +4552,51 @@ class Dataset:
             {14: 'listen', 15: 'marriage', 22: 'reach'}
             >>> splitted.images.groupby("split")["separate"].value_counts()
             split  separate
-            train  likely      27
+            train  star        27
+                   likely      27
                    number      27
                    attack      22
-                   rest        20
                    entire      17
                    enough      16
                    system      15
-                   often       11
-                   star         0
-                   law          0
-            valid  star        27
-                   law         18
-                   entire       0
-                   attack       0
                    rest         0
+                   law          0
+                   often        0
+            valid  rest        20
+                   law         18
+                   often       11
+                   entire       0
+                   star         0
+                   attack       0
                    likely       0
                    system       0
-                   often        0
                    enough       0
                    number       0
             Name: count, dtype: int64
             >>> splitted.images.groupby("split")["balanced"].value_counts()
             split  balanced
             train  could       21
-                   coach       21
-                   send        19
-                   firm        18
-                   end         17
+                   coach       20
+                   end         20
+                   firm        17
+                   send        16
                    anything    14
-                   training    14
-                   region      11
+                   training    13
                    lead        10
                    note        10
+                   region      10
             valid  could        8
-                   end          7
+                   send         8
                    note         6
+                   firm         5
                    anything     5
-                   send         5
-                   firm         4
-                   training     3
-                   region       3
+                   training     4
+                   region       4
+                   end          4
+                   coach        3
                    lead         2
-                   coach        2
             Name: count, dtype: int64
         """
-        if len(split_names) <= 1:
-            raise ValueError(
-                f"Must provide at least 2 split names. Got {split_names} of size"
-                f" {len(split_names)} instead."
-            )
-        if len(target_split_shares) != len(split_names):
-            raise ValueError(
-                "Size mismatch between 'split_names' and 'split_shares'"
-                f" ({len(split_names)} vs {len(target_split_shares)})"
-            )
-        if sum(target_split_shares) != 1:
-            raise ValueError(
-                "Split share values must addup to 1. Got"
-                f" {sum(target_split_shares)} instead"
-            )
         if (
             (not keep_separate_groups)
             or keep_separate_groups == "image_id"
@@ -4639,9 +4611,7 @@ class Dataset:
         keep_separate_groups = groups_to_list(keep_separate_groups)
         keep_balanced_groups = groups_to_list(keep_balanced_groups)
 
-        if keep_balanced_groups_weights is None:
-            keep_balanced_groups_weights = [1] * len(keep_balanced_groups)
-        else:
+        if keep_balanced_groups_weights is not None:
             keep_balanced_groups_weights = [*keep_balanced_groups_weights]
 
         keep_balanced_group_names = get_group_names(keep_balanced_groups)
@@ -4654,9 +4624,13 @@ class Dataset:
         keep_balanced_image_groups = [
             keep_balanced_groups[i] for i in keep_balanced_image_groups_indices
         ]
-        keep_balanced_image_groups_weights = [
-            keep_balanced_groups_weights[i] for i in keep_balanced_image_groups_indices
-        ]
+        if keep_balanced_groups_weights is not None:
+            keep_balanced_image_groups_weights = [
+                keep_balanced_groups_weights[i]
+                for i in keep_balanced_image_groups_indices
+            ]
+        else:
+            keep_balanced_image_groups_weights = None
 
         keep_separate_group_names = get_group_names(keep_separate_groups)
         keep_separate_image_groups = [
@@ -4700,8 +4674,6 @@ class Dataset:
         )
 
         if inplace:
-            self.images = splitted_images
-            self.annotations = splitted_annotations
             return self
 
         return self.from_template(

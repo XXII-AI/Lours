@@ -1,4 +1,4 @@
-from collections.abc import Callable, Iterable
+from collections.abc import Callable, Sequence
 from random import seed, shuffle
 from typing import overload
 from warnings import warn
@@ -129,18 +129,122 @@ def get_winner(
     return winner, split_hists, split_hists_distances, split_sizes
 
 
+def check_split_target(
+    split_names: Sequence[str], target_split_shares: Sequence[float]
+) -> pd.Series:
+    if len(split_names) <= 1:
+        raise ValueError(
+            f"Must provide at least 2 split names. Got {split_names} of size"
+            f" {len(split_names)} instead."
+        )
+    if len(target_split_shares) != len(split_names):
+        raise ValueError(
+            "Size mismatch between 'split_names' and 'split_shares'"
+            f" ({len(split_names)} vs {len(target_split_shares)})"
+        )
+    if sum(target_split_shares) != 1:
+        raise ValueError(
+            "Split share values must addup to 1. Got"
+            f" {sum(target_split_shares)} instead"
+        )
+
+    return pd.Series(list(target_split_shares), index=list(split_names))
+
+
+def simple_split_dataframe(
+    input_data: pd.DataFrame,
+    input_seed: int = 0,
+    split_names: Sequence[str] = ("train", "valid"),
+    target_split_shares: Sequence[float] = (0.8, 0.2),
+    inplace: bool = False,
+) -> pd.DataFrame:
+    """Simple version of splitting method, splitting unassigned rows randomly.
+
+    Note:
+        If target split shares and already assigned rows are incompatible, a warning
+        will be issued, and the splitting process will continueusing relative target
+        shares for remaining splits instead.
+
+    Args:
+        input_data: DataFrame to assign split values.
+        input_seed: Random seed for splitting images. Defaults to 0.
+        split_names: Names of splits. Must be more than 1 element long and the same
+            size as ``target_split_shares``. Defaults to ``("train", "valid")``.
+        target_split_shares: Share values of each split. Must be the same size as
+            ``split_names``. Must add up to 1. Defaults to ``(0.8, 0.2)``.
+        inplace: If set to True, will perform the splitting inplace without creating
+            a new dataset. Defaults to False.
+
+    Returns:
+        DataFrame with new splits applied to its ``split`` column.
+    """
+    target_split_shares_series = check_split_target(
+        split_names=split_names, target_split_shares=target_split_shares
+    )
+    split_sizes = pd.Series(0, index=list(split_names))
+    gen = np.random.default_rng(input_seed)
+    if "split" in input_data.columns:
+        already_assigned = input_data["split"].value_counts()
+        split = input_data["split"] if inplace else input_data["split"].copy()
+        for split_name, value in already_assigned.items():
+            if split_name in split_sizes.index:
+                split_sizes[split_name] = value
+            else:
+                # Split name not wanted, we reset it
+                split.loc[split == split_name] = None
+
+    else:
+        split = pd.Series(None, index=input_data.index, dtype=object)
+
+    target_split_sizes_series = target_split_shares_series * len(input_data)
+    residual_target_split_sizes = target_split_sizes_series - split_sizes
+    if residual_target_split_sizes.min() < 0:
+        too_big_splits = residual_target_split_sizes[
+            residual_target_split_sizes < 0
+        ].index
+        split_shares = split_sizes / len(input_data)
+        too_big_str = [
+            f"{name}: {target_split_shares_series[name]} (target) vs "
+            f"{split_shares[name]} (already assigned)"
+            for name in too_big_splits
+        ]
+        warn(
+            "The following split already have too much samples assigned regarding "
+            f"target shares : {', '.join(too_big_str)}. The process will assign "
+            "remaining split values in order to respect their relative share, but "
+            "the target share will not be met. You might want to reset your "
+            "already assigned split values or use less restrictive split target "
+            "shares.",
+            RuntimeWarning,
+        )
+
+    # Compute residual target shares, and apply this splitting to the not assigned rows.
+    residual_target_split_sizes = residual_target_split_sizes.clip(0)
+    residual_target_split_shares = (
+        residual_target_split_sizes / residual_target_split_sizes.sum()
+    )
+    split.loc[split.isna()] = gen.choice(
+        list(split_names), size=split.isna().sum(), p=list(residual_target_split_shares)
+    )
+    if inplace:
+        input_data["split"] = split
+    else:
+        input_data = input_data.assign(split=split)
+    return input_data
+
+
 @overload
 def split_dataframe(
     input_data: pd.DataFrame,
     root_data: pd.DataFrame,
     key_to_root: str = "image_id",
     input_seed: int = 0,
-    split_names: Iterable[str] = ("train", "valid"),
-    target_split_shares: Iterable[float] = (0.8, 0.2),
+    split_names: Sequence[str] = ("train", "valid"),
+    target_split_shares: Sequence[float] = (0.8, 0.2),
     split_column_name: str = "split",
     keep_separate_groups: group_list = ("image_id",),
     keep_balanced_groups: group_list = ("category_id",),
-    keep_balanced_groups_weights: Iterable[float] | None = None,
+    keep_balanced_groups_weights: Sequence[float] | None = None,
     inplace: bool = False,
     split_at_root_level: bool = False,
     hist_cost_weight: float = 1,
@@ -156,12 +260,12 @@ def split_dataframe(
     root_data: None = None,
     key_to_root: str = "image_id",
     input_seed: int = 0,
-    split_names: Iterable[str] = ("train", "valid"),
-    target_split_shares: Iterable[float] = (0.8, 0.2),
+    split_names: Sequence[str] = ("train", "valid"),
+    target_split_shares: Sequence[float] = (0.8, 0.2),
     split_column_name: str = "split",
     keep_separate_groups: group_list = ("image_id",),
     keep_balanced_groups: group_list = ("category_id",),
-    keep_balanced_groups_weights: Iterable[float] | None = None,
+    keep_balanced_groups_weights: Sequence[float] | None = None,
     inplace: bool = False,
     split_at_root_level: bool = False,
     hist_cost_weight: float = 1,
@@ -177,12 +281,12 @@ def split_dataframe(
     root_data: pd.DataFrame | None = None,
     key_to_root: str = "image_id",
     input_seed: int = 0,
-    split_names: Iterable[str] = ("train", "valid"),
-    target_split_shares: Iterable[float] = (0.8, 0.2),
+    split_names: Sequence[str] = ("train", "valid"),
+    target_split_shares: Sequence[float] = (0.8, 0.2),
     split_column_name: str = "split",
     keep_separate_groups: group_list = ("image_id",),
     keep_balanced_groups: group_list = ("category_id",),
-    keep_balanced_groups_weights: Iterable[float] | None = None,
+    keep_balanced_groups_weights: Sequence[float] | None = None,
     inplace: bool = False,
     split_at_root_level: bool = False,
     hist_cost_weight: float = 1,
@@ -197,12 +301,12 @@ def split_dataframe(
     root_data: pd.DataFrame | None = None,
     key_to_root: str = "image_id",
     input_seed: int = 0,
-    split_names: Iterable[str] = ("train", "valid"),
-    target_split_shares: Iterable[float] = (0.8, 0.2),
+    split_names: Sequence[str] = ("train", "valid"),
+    target_split_shares: Sequence[float] = (0.8, 0.2),
     split_column_name: str = "split",
     keep_separate_groups: group_list = ("image_id",),
     keep_balanced_groups: group_list = ("category_id",),
-    keep_balanced_groups_weights: Iterable[float] | None = None,
+    keep_balanced_groups_weights: Sequence[float] | None = None,
     inplace: bool = False,
     split_at_root_level: bool = False,
     hist_cost_weight: float = 1,
@@ -270,8 +374,9 @@ def split_dataframe(
         new annotation and root_data with the split column populated with the
         corresponding split name.
     """
-    target_split_shares = pd.Series(list(target_split_shares), index=[*split_names])
-    target_split_shares /= target_split_shares.sum()
+    target_split_shares_series = check_split_target(
+        split_names=split_names, target_split_shares=target_split_shares
+    )
 
     keep_balanced_groups = groups_to_list(keep_balanced_groups)
     for g in keep_balanced_groups:
@@ -281,11 +386,11 @@ def split_dataframe(
     keep_separate_groups = groups_to_list(keep_separate_groups)
 
     if keep_balanced_groups_weights is None:
-        keep_balanced_groups_weights = pd.Series(
+        keep_balanced_groups_weights_series = pd.Series(
             1, index=keep_balanced_group_names, dtype=float
         )
     else:
-        keep_balanced_groups_weights = pd.Series(
+        keep_balanced_groups_weights_series = pd.Series(
             list(keep_balanced_groups_weights),
             index=keep_balanced_group_names,
             dtype=float,
@@ -330,23 +435,25 @@ def split_dataframe(
         data=input_data,
         groups=keep_separate_input_pandas_groups,
         split_column=split_column_name,
-        split_names=target_split_shares.index,  # pyright: ignore
+        split_names=target_split_shares_series.index,  # pyright: ignore
     )
     if not atomic_chunks:
         print("No chunk to distribute")
     else:
         print(
             f"{len(atomic_chunks)} chunks to distribute"
-            f" across {len(target_split_shares)} splits"
+            f" across {len(target_split_shares_series)} splits"
         )
 
     # Construct a split dictionary, containing the indexes of input_data, belonging
     # to each split
-    splits: dict[str, list] = {str(name): [] for name in target_split_shares.index}
-    split_sizes = pd.Series(0, index=target_split_shares.index)
+    splits: dict[str, list] = {
+        str(name): [] for name in target_split_shares_series.index
+    }
+    split_sizes = pd.Series(0, index=target_split_shares_series.index)
 
     def share_cost_function(candidate_shares: pd.Series) -> float:
-        return dataset_share_distance(target_split_shares, candidate_shares)
+        return dataset_share_distance(target_split_shares_series, candidate_shares)
 
     (
         keep_balanced_groups_dict,
@@ -359,11 +466,11 @@ def split_dataframe(
         key_to_root=key_to_root,
     )
 
-    category_weights = keep_balanced_groups_weights[
-        keep_balanced_groups_weights.index.isin(category_groups)
+    category_weights = keep_balanced_groups_weights_series[
+        keep_balanced_groups_weights_series.index.isin(category_groups)
     ]
-    continuous_weights = keep_balanced_groups_weights[
-        keep_balanced_groups_weights.index.isin(continuous_groups)
+    continuous_weights = keep_balanced_groups_weights_series[
+        keep_balanced_groups_weights_series.index.isin(continuous_groups)
     ]
 
     keep_balanced_pandas_groups = list(keep_balanced_groups_dict.values())
@@ -373,7 +480,7 @@ def split_dataframe(
         # their construction. split_hists is a dataframe of histograms.
         # Each column is a split
         split_hists = pd.DataFrame(
-            0, index=target_hist.index, columns=target_split_shares.index
+            0, index=target_hist.index, columns=target_split_shares_series.index
         )
 
         # Function that we will apply to the split histogram dataframe

@@ -105,21 +105,21 @@ def make_atomic_chunks(
         already_assigned_chunks[name].append(split)
     if split_column in data.columns:
         for df in df_list:
-            split_names = [
+            chunk_split_names = [
                 name
                 for name in df[split_column].dropna().unique()
                 if name in split_names
             ]
-            if len(split_names) > 1:
-                split_names_str = ", ".join(map(str, split_names))
+            if len(chunk_split_names) > 1:
+                split_names_str = ", ".join(map(str, chunk_split_names))
                 warnings.warn(
                     "One chunk has multiple split assignments"
                     f" ({split_names_str}) and will be treated as unassigned",
                     RuntimeWarning,
                 )
                 unassigned.append(df)
-            elif len(split_names) == 1:
-                split_name = split_names[0]
+            elif len(chunk_split_names) == 1:
+                split_name = chunk_split_names[0]
                 df[split_column] = split_name
                 already_assigned_chunks[split_name].append(df)
             else:
