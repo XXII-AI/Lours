@@ -635,7 +635,7 @@ class DetectionEvaluator(DetectionEvaluatorBase):
                 print(f"Processing PR curve for model={p_name} and IOU={iou}")
                 if pandas_groups:
                     precision_recall_curve = results.groupby(
-                        pandas_groups, sort=False
+                        pandas_groups, sort=False, observed=True
                     ).progress_apply(  # pyright: ignore
                         partial(
                             pr_curve,
@@ -668,7 +668,7 @@ class DetectionEvaluator(DetectionEvaluatorBase):
 
         precision_recall_curves = pd.concat(precision_recall_curves, ignore_index=True)
         average_precisions = precision_recall_curves.groupby(
-            group_names + ["iou_threshold", "model"], sort=False
+            group_names + ["iou_threshold", "model"], sort=False, observed=True
         ).apply(compute_average_precision, include_groups=False)
         average_precisions = average_precisions.rename("AP").reset_index()
         if "category_id" in group_names:
