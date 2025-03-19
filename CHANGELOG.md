@@ -7,9 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [1.2.1] - 2025-03-19
+
+### Fixed
+
+- Do not import `pytest_regressions`package when pytest discovers plugin. Only do it at run time #76
+
 ## [1.2.0] - 2025-03-19
 
-### Changed
+### Fixed
 
 - Fix a bug in splitting were already assigned split values were discarded #74
 
