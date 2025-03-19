@@ -4,7 +4,6 @@ from pathlib import Path
 
 import pytest
 from imageio import imread
-from pytest_regressions.common import perform_regression_check
 
 from lours.dataset import Dataset, from_parquet
 
@@ -124,6 +123,14 @@ class DataSetRegressionFixture:
         dump_fn = functools.partial(
             self.dump_fn, dataset, with_image_checksum=check_images
         )
+
+        try:
+            from pytest_regressions.common import perform_regression_check
+        except ImportError as e:
+            raise ImportError(
+                "Pytest regression is not installed, reinstall Lours with "
+                "'regression' extra dependency"
+            ) from e
 
         perform_regression_check(
             datadir=self.datadir,
