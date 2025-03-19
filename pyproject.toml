@@ -1,8 +1,9 @@
 [tool.poetry]
 name = "lours"
-version = "1.2.0"
+version = "1.2.1"
 description = ""
-authors = ["Lilian Glaudin <lilian.glaudin@xxii.fr>",
+authors = ["XXII",
+           "Lilian Glaudin <lilian.glaudin@xxii.fr>",
            "Clément Pinard <mail@clementpinard.fr>",
            "Quoc Cuong LE <quoccuong.le@xxii.fr>",
            "Nacer Kaci <nacer.kaci@xxii.fr>",
