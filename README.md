@@ -6,8 +6,8 @@
 |-|-|-|
 | 📚 [Docs](https://lours.readthedocs.io)| 📊 [Slides](https://docs.google.com/presentation/d/1crfwQmDnzkMmekznpZZiX0E0XPEhCAOkFPWa1NmflXU/pub) | 📝 Blogpost (coming soon) |
 
-[![codecov](https://img.shields.io/codecov/c/gh/XXII-AI/lours?logo=codecov&color=cyan)](https://codecov.io/gh/XXII-AI/Lours) ![GitHub License](https://img.shields.io/github/license/XXII-AI/Lours?color=violet&logo=license) ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/lours?logo=python)
- ![PyPI - Version](https://img.shields.io/pypi/v/lours?logo=pypi) ![PyPI - Downloads](https://img.shields.io/pypi/dm/lours?color=yellow) ![Read the Docs](https://img.shields.io/readthedocs/lours?logo=readthedocs&color=orange)
+[![codecov](https://img.shields.io/codecov/c/gh/XXII-AI/lours?logo=codecov&color=cyan)](https://codecov.io/gh/XXII-AI/Lours) [![GitHub License](https://img.shields.io/github/license/XXII-AI/Lours?color=violet&logo=license)](https://github.com/XXII-AI/Lours/blob/main/LICENSE) [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/lours?logo=python)](https://pypi.org/project/lours/)
+ [![PyPI - Version](https://img.shields.io/pypi/v/lours?logo=pypi)](https://pypi.org/project/lours/) [![PyPI - Downloads](https://img.shields.io/pypi/dm/lours?color=yellow)](https://pypi.org/project/lours/) [![Read the Docs](https://img.shields.io/readthedocs/lours?logo=readthedocs&color=orange)](https://lours.readthedocs.io/)
 
 ![logo lours](https://github.com/XXII-AI/Lours/raw/main/docs/_static/logo.png)
 
