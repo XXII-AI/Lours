@@ -18,6 +18,11 @@
 
 The overall complexity and lack of standardization in public object detection data makes it painstakingly hard to work with. Lours is a library that makes construction, conversion and manipulation of any detection dataset easy, fast and reliable.
 
+<p align="center">
+  <img src="docs/_static/demo.gif" alt="lours logo" width="90%">
+</p>
+
+
 ### The `Dataset` class
 
 At its core, Lours features a unified `Dataset` class. It offers :
