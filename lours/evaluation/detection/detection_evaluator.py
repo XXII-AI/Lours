@@ -330,11 +330,13 @@ class DetectionEvaluator(DetectionEvaluatorBase):
             iou_below_threshold_pred = iou_below_threshold_gt
 
             df_iou_above_threshold = results[iou_above_threshold]
+            # Note that these "pyright: ignore" should be removed soon
+            # See https://github.com/pandas-dev/pandas-stubs/pull/1239
             df_iou_below_threshold_gt = results[iou_below_threshold_gt].assign(
-                prediction_label=pd.NA
+                prediction_label=pd.NA  # pyright: ignore
             )
             df_iou_below_threshold_pred = results[iou_below_threshold_pred].assign(
-                groundtruth_label=pd.NA
+                groundtruth_label=pd.NA  # pyright: ignore
             )
 
             results = pd.concat(

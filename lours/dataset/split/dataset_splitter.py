@@ -82,7 +82,7 @@ def get_winner(
             split_hists_distances = split_hists.apply(hist_cost_function)
         updated_split_hists = split_hists.add(candidate_hist, axis="index")
         updated_split_hist_distances = updated_split_hists.apply(hist_cost_function)
-        split_hist_distance_square = split_hists_distances.values
+        split_hist_distance_square = split_hists_distances.to_numpy()
         ones = np.ones_like(split_hist_distance_square, dtype=int)
         split_hist_distance_square = split_hist_distance_square[:, None] @ ones[None]
         split_hist_distance_square[ones, ones] = updated_split_hist_distances

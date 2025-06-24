@@ -199,7 +199,7 @@ def set_attribute_columns_labels(
     column_labels: dict[str, tuple[Sequence[str], Sequence[float] | None]] = {}
     if isinstance(columns_specs, int):
         for _ in range(columns_specs):
-            n_labels = numpy_generator.integers(min_labels, max_labels)
+            n_labels = int(numpy_generator.integers(min_labels, max_labels))
             header_name = fake_generator.unique.word()
             labels = random_labels(n_labels)
             column_labels[header_name] = (labels, None)
@@ -212,7 +212,9 @@ def set_attribute_columns_labels(
         for specific_column_spec in columns_specs:
             if isinstance(specific_column_spec, str):
                 header_name = specific_column_spec
-                specific_column_spec = numpy_generator.integers(min_labels, max_labels)
+                specific_column_spec = int(
+                    numpy_generator.integers(min_labels, max_labels)
+                )
             else:
                 header_name = fake_generator.unique.word()
             column_labels[header_name] = construct_detailed_column_spec(

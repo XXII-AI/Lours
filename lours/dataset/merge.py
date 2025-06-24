@@ -87,6 +87,7 @@ def merge_datasets(
             and not overwrite_origin
         ):
             return dataset
+        assert dataset.dataset_name is not None
         return dataset.from_template(
             images=dataset.images.assign(
                 origin=dataset.dataset_name,

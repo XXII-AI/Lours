@@ -2,6 +2,7 @@ import os
 from hashlib import sha256
 from pathlib import Path
 
+import pandas as pd
 import pytest
 from imageio import imread
 
@@ -78,7 +79,7 @@ class DataSetRegressionFixture:
                 image = imread(image_path)
                 checksums[image_id] = sha256(image.tobytes()).hexdigest()
             dataset = dataset.from_template(
-                images=dataset.images.assign(checksum=checksums)
+                images=dataset.images.assign(checksum=pd.Series(checksums))
             )
         dataset.to_parquet(output_folder, overwrite=True)
         # If dump was successful, make an empty file so that filename is a path to a
