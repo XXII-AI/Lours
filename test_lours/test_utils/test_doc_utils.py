@@ -1,10 +1,10 @@
+import numpy as np
+import pandas as pd
 import pytest
+from faker import Faker
 
 from lours.utils.doc_utils import dummy_dataset, set_attribute_columns_labels
 from lours.utils.testing import assert_dataset_equal
-import pandas as pd
-import numpy as np
-from faker import Faker
 
 
 def test_dummy_dataset():
