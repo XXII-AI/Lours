@@ -61,13 +61,11 @@ def construct_attribute_column(
 
 random_attribute_column_type = (
     int
-    | Sequence[int]
     | Sequence[str]
-    | Sequence[Sequence[float]]
-    | dict[str, int]
-    | dict[str, Sequence[float]]
-    | dict[str, Sequence[str]]
-    | dict[str, dict[str, float]]
+    | Sequence[int | Sequence[float] | Sequence[str] | dict[str, float]]
+    | dict[
+        str, int | Sequence[float] | Sequence[str] | Sequence[float] | dict[str, float]
+    ]
 )
 """The random attribute columns type is a way to design a column with random
 attributes.
@@ -708,6 +706,7 @@ def dummy_dataset(
             columns_specs=n_attributes_columns_annotations,
             numpy_generator=gen,
             fake_generator=fake_generator,
+            is_list=False,
         )
 
     dataset = Dataset(
