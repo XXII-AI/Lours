@@ -55,6 +55,7 @@ See <https://UPDATE-ME>
 
 ```python
 from lours.dataset import from_caipy, from_coco
+
 dataset1 = from_caipy("path/to/caipy")
 print(dataset1)
 dataset2 = from_coco("path/to/coco", images_root="/path/to/coco_images")

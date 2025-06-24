@@ -13,8 +13,7 @@ A clear and concise description of what the bug is.
 **To Reproduce**
 Steps to reproduce the behavior:
 
-If possible, try to make the bug reproducible using the dummy_dataset tool
-See more documentation about it [here](https://lours.readthedocs.io/latest/generated/lours.utils.doc_utils.html#lours.utils.doc_utils.dummy_dataset)
+If possible, try to make the bug reproducible using the [dummy_dataset](https://lours.readthedocs.io/latest/generated/lours.utils.doc_utils.html#lours.utils.doc_utils.dummy_dataset) tool
 
 ```python
 from lours.utils.doc_utils import dummy_dataset

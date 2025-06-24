@@ -66,4 +66,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Archived changelog
 
-For previous changelog entries, before github migration, click [here](docs/changelog_old.md)
+For previous changelog entries, before github migration, got [changelog_old.md](docs/changelog_old.md)
