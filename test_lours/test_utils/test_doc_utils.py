@@ -57,6 +57,11 @@ def test_dummy_dataset_bool():
 
 def test_dummy_dataset_real_images():
     dataset = dummy_dataset(
-        n_imgs=10, n_annot=100, n_labels=2, seed=1, generate_real_images=True
+        n_imgs=10,
+        n_annot=100,
+        n_labels=2,
+        seed=1,
+        generate_real_images=True,
+        n_list_columns_images=["my_list"],
     )
     dataset.check()
