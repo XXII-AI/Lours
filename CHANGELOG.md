@@ -13,6 +13,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Do not import `pytest_regressions`package when pytest discovers plugin. Only do it at run time #76
 
+### Changed
+
+- Switch for `poetry` to `uv` and change github actions accordingly. #82
+
 ## [1.2.0] - 2025-03-19
 
 ### Fixed
