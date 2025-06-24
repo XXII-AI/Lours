@@ -307,7 +307,9 @@ def df_to_hist(
     hist.name = "histogram"
     if full_index is None:
         if isinstance(hist.index, pd.MultiIndex):
-            full_index = pd.MultiIndex.from_product(hist.index.levels)
+            full_index = pd.MultiIndex.from_product(
+                hist.index.levels  # pyright: ignore
+            )
         else:
             full_index = hist.index
     return hist.reindex(full_index).fillna(0)
