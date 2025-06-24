@@ -42,7 +42,7 @@ jobs:
       - name: Set up Python
         run: |
           uv python install
-          uv sync --group test
+          uv sync --group test --all-extras
       - name: Run the test
         run: |
           uv run coverage run -m pytest
@@ -70,7 +70,7 @@ jobs:
         with:
           pandoc-version: "latest"
       - name: Install the project dependencies
-        run: uv sync --group test
+        run: uv sync --group test --all-extras
       - name: "Build docs and check for warnings 📖"
         shell: bash
         run: |
@@ -86,7 +86,7 @@ jobs:
           enable-cache: true
           cache-dependency-glob: "pyproject.toml"
       - name: Install the project dependencies
-        run: uv sync --group test
+        run: uv sync --group test --all-extras
       - run: echo "$PWD/.venv/bin" >> $GITHUB_PATH
       - uses: jakebailey/pyright-action@v2
         name: Run pyright
