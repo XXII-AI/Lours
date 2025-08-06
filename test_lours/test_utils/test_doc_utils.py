@@ -111,7 +111,10 @@ def test_column_specs(dataframe_regression):
         numpy_generator=gen,
     )
 
-    dataframe_regression.check(dataframe_to_test)
+    # categorical data is not accepted anymore for regression testing
+    # so we convert to string.
+    # See https://github.com/ESSS/pytest-regressions/issues/197
+    dataframe_regression.check(dataframe_to_test.astype(str))
 
     np.testing.assert_allclose(
         dataframe_to_test["col5"].value_counts().to_numpy() / length,

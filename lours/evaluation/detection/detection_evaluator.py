@@ -174,7 +174,7 @@ class DetectionEvaluator(DetectionEvaluatorBase):
                 groups.append("category_id")
             grouped = groundtruth_prediction.groupby(groups, group_keys=False)
             matches[prediction_name] = grouped.progress_apply(  # pyright: ignore
-                partial(construct_matches_df, min_iou=min_iou), include_groups=False
+                partial(construct_matches_df, min_iou=min_iou)
             )
         return matches
 
@@ -644,8 +644,7 @@ class DetectionEvaluator(DetectionEvaluatorBase):
                             min_iou=iou,
                             reindex_series=reindex_series,
                             betas=f_scores_betas,
-                        ),
-                        include_groups=False,
+                        )
                     )
                     # Groups are currently in the multiIndex. Reset it to make the
                     # dataframe easier to use: rename the index with the group names and
@@ -671,7 +670,7 @@ class DetectionEvaluator(DetectionEvaluatorBase):
         precision_recall_curves = pd.concat(precision_recall_curves, ignore_index=True)
         average_precisions = precision_recall_curves.groupby(
             group_names + ["iou_threshold", "model"], sort=False, observed=True
-        ).apply(compute_average_precision, include_groups=False)
+        ).apply(compute_average_precision)
         average_precisions = average_precisions.rename("AP").reset_index()
         if "category_id" in group_names:
             precision_recall_curves["category_str"] = precision_recall_curves[
