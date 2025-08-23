@@ -32,7 +32,7 @@ jobs:
         os: [ubuntu-22.04, ubuntu-24.04, ubuntu-latest, macos-latest]
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
@@ -67,7 +67,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout repository 🛎"
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Install poetry
         uses: abatilo/actions-poetry@v4
       - name: "Install pandoc 📝"
@@ -95,7 +95,7 @@ jobs:
   run-pyright:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Install poetry
         uses: abatilo/actions-poetry@v4
       - name: Setup poetry
