@@ -50,7 +50,7 @@ jobs:
             poetry.lock
           key: venv-${{ hashFiles('pyproject.toml') }}-${{ matrix.python-version }}-${{ matrix.os }}
       - name: Install the project dependencies
-        run: poetry install --with test
+        run: poetry install --with test --all-extras
       - name: Run the test
         run: |
           poetry run coverage run -m pytest
@@ -86,7 +86,7 @@ jobs:
             poetry.lock
           key: venv-${{ hashFiles('pyproject.toml') }}
       - name: Install the project dependencies
-        run: poetry install --with test
+        run: poetry install --with test --all-extras
       - name: "Build docs and check for warnings 📖"
         shell: bash
         run: |
@@ -110,7 +110,7 @@ jobs:
             poetry.lock
           key: venv-${{ hashFiles('pyproject.toml') }}
       - name: Install the project dependencies
-        run: poetry install --with test
+        run: poetry install --with test --all-extras
       - run: echo "$PWD/.venv/bin" >> $GITHUB_PATH
       - uses: jakebailey/pyright-action@v2
         name: Run pyright

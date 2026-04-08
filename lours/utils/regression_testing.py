@@ -1,6 +1,7 @@
 import os
 from hashlib import sha256
 from pathlib import Path
+from typing import TYPE_CHECKING
 
 import pandas as pd
 import pytest
@@ -9,6 +10,9 @@ from imageio import imread
 from lours.dataset import Dataset, from_parquet
 
 from .testing import assert_dataset_equal
+
+if TYPE_CHECKING:
+    from pytest_datadir.plugin import LazyDataDir
 
 
 class DataSetRegressionFixture:
@@ -22,7 +26,10 @@ class DataSetRegressionFixture:
     """
 
     def __init__(
-        self, datadir: Path, original_datadir: Path, request: pytest.FixtureRequest
+        self,
+        datadir: "LazyDataDir",
+        original_datadir: Path,
+        request: pytest.FixtureRequest,
     ) -> None:
         self.request = request
         self.datadir = datadir
@@ -149,7 +156,7 @@ class DataSetRegressionFixture:
 
 @pytest.fixture
 def dataset_regression(
-    datadir: Path, original_datadir: Path, request: pytest.FixtureRequest
+    datadir: "LazyDataDir", original_datadir: Path, request: pytest.FixtureRequest
 ) -> "DataSetRegressionFixture":
     """Regression fixture for datasets. Will save the dataset to parquet and compare
     with the already saved parquet dataset

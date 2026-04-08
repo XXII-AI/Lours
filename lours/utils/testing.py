@@ -56,7 +56,8 @@ def assert_column(
         else:
             raise AssertionError(
                 f"Assertion failed. {message}. First occurrences at rows"
-                f" {failure.index[:n_first_occurrences]} :\n{failure.iloc[:n_first_occurrences]}"
+                f" {failure.index[:n_first_occurrences]}"
+                f" :\n{failure.iloc[:n_first_occurrences]}"
             )
 
 

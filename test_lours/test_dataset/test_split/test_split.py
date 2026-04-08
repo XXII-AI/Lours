@@ -165,7 +165,7 @@ def test_coco_balanced_category_split():
     )
     coco = coco[::10]
 
-    coco.images.split = None
+    coco.images["split"] = None
     splitted_coco = coco.split(
         input_seed=1,
         split_names=["train", "valid"],
@@ -185,7 +185,7 @@ def test_balanced_continuous_split():
         coco_json=DATA / "coco_eval/instances_val2017.json", images_root=Path(".")
     )
     coco = coco[::10]
-    coco.images.split = None
+    coco.images["split"] = None
 
     box_height_group = ContinuousGroup("box_height", 10, qcut=True)
 
@@ -209,7 +209,7 @@ def test_balanced_mix_split():
         coco_json=DATA / "coco_eval/instances_val2017.json", images_root=Path(".")
     ).remap_from_preset("coco", "supercategory")
     coco = coco[::10]
-    coco.images.split = None
+    coco.images["split"] = None
 
     box_height_group = ContinuousGroup("box_height", 10, qcut=True)
 
@@ -233,7 +233,7 @@ def test_balanced_two_continuous_split():
         coco_json=DATA / "coco_eval/instances_val2017.json", images_root=Path(".")
     )
     coco = coco[::10]
-    coco.images.split = None
+    coco.images["split"] = None
 
     box_height_group = ContinuousGroup("box_height", 10, qcut=True)
     box_width_group = ContinuousGroup("box_width", 10, qcut=True)
@@ -257,7 +257,7 @@ def test_simple_split(inplace):
     coco = from_coco(
         coco_json=DATA / "coco_eval/instances_val2017.json", images_root=Path(".")
     )
-    coco.images.split = None
+    coco.images["split"] = None
 
     splitted_coco = coco.split(
         input_seed=1,
@@ -290,7 +290,7 @@ def test_simple_split_already_assigned():
     coco = from_coco(
         coco_json=DATA / "coco_eval/instances_val2017.json", images_root=Path(".")
     )
-    coco.images.split = None
+    coco.images["split"] = None
     gen = np.random.default_rng(1)
     to_assign = gen.choice([True, False], size=len(coco), p=[0.2, 0.8])
     coco.images.loc[to_assign, "split"] = "train"
@@ -327,7 +327,7 @@ def test_simple_split_too_many_already_assigned():
     coco = from_coco(
         coco_json=DATA / "coco_eval/instances_val2017.json", images_root=Path(".")
     )
-    coco.images.split = None
+    coco.images["split"] = None
     gen = np.random.default_rng(1)
     to_assign = gen.choice([True, False], size=len(coco), p=[0.2, 0.8])
     coco.images.loc[to_assign, "split"] = "valid"
