@@ -5,7 +5,7 @@
   <img src="docs/_static/logo-title.png" alt="lours logo" width="25%">
 </p>
 
-#### The ultimate companion library for object detection data
+<b>The ultimate companion library for object detection data</b>
 
 | 📚 [Docs](https://lours.readthedocs.io)| 📊 [Slides](https://docs.google.com/presentation/d/1crfwQmDnzkMmekznpZZiX0E0XPEhCAOkFPWa1NmflXU/pub) | 📝 Blogpost (coming soon) |
 
@@ -21,7 +21,6 @@ The overall complexity and lack of standardization in public object detection da
 <p align="center">
   <img src="docs/_static/demo.gif" alt="lours logo" width="90%">
 </p>
-
 
 ### The `Dataset` class
 
@@ -39,6 +38,7 @@ A Lours dataset object is essentially composed of two `pandas.DataFrame` :
 
 ```python
 from lours.dataset import Dataset, from_coco
+
 COCO_dataset = from_coco("docs/notebooks/notebook_data/coco_valid.json")
 COCO_dataset
 ```
@@ -96,7 +96,7 @@ poetry add --editable https://github.com/XXII-AI/lours.git
 
 ## Tutorials
 
-A list of tutorials is available in the Lours documentation [here](https://lours.readthedocs.io/stable/tutorials.html).
+A list of tutorials is available in the [Lours documentation tutorials](https://lours.readthedocs.io/stable/tutorials.html).
 
 We also provide examples notebooks in the `docs/notebooks` folder.
 
