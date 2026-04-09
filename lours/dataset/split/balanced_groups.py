@@ -50,7 +50,9 @@ def earth_mover_distance(
         right.index.to_frame()[continuous_weights.index].astype(float)
         * continuous_weights
     ).to_numpy()
-    distance_matrix = dist(left_bins, right_bins, metric="cityblock")
+    distance_matrix: np.ndarray = dist(
+        left_bins, right_bins, metric="cityblock"
+    )  # pyright: ignore
     distance_matrix = distance_matrix / distance_matrix.max()
 
     normalized_left = (left / left.sum()).to_numpy()

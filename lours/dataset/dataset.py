@@ -1225,8 +1225,8 @@ class Dataset:
         n_invalid_annotations = self.loc[invalid_images.index].len_annot()
         print(
             f"Removed {n_invalid_images} image{'s' if n_invalid_images > 1 else ''},"
-            " with"
-            f" {n_invalid_annotations} annotation{'s' if n_invalid_annotations > 1 else ''}"
+            f" with {n_invalid_annotations}"
+            f" annotation{'s' if n_invalid_annotations > 1 else ''}"
         )
         return self.loc[~self.images.index.isin(invalid_images.index)]
 

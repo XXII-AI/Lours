@@ -313,7 +313,7 @@ def create_fo_dataset(
             **image_data.loc[image_tag_columns].dropna(),  # pyright: ignore
         )
         samples[image_id] = sample
-        sample_ids[image_id] = sample.id
+        sample_ids[image_id] = sample.id  # type: ignore
 
     for annotation_name, fo_detections_frame in fo_detections.items():
         for (image_id, is_keypoint), detections_subset in fo_detections_frame.groupby(

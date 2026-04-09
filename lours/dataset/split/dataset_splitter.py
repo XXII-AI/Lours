@@ -188,7 +188,7 @@ def simple_split_dataframe(
         split = input_data["split"] if inplace else input_data["split"].copy()
         for split_name, value in already_assigned.items():
             if split_name in split_sizes.index:
-                split_sizes[split_name] = value
+                split_sizes.loc[split_name] = value  # type: ignore
             else:
                 # Split name not wanted, we reset it
                 split.loc[split == split_name] = None

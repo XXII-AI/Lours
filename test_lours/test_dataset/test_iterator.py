@@ -23,7 +23,7 @@ def test_indexing():
 def test_iter_images():
     dataset = from_caipy(dataset_path=DATA / "caipy_dataset")
     result = list(dataset.iter_images())
-    images = pd.DataFrame.from_records([r[0] for r in result])
+    images = pd.DataFrame.from_records([r[0].to_dict() for r in result])
     images.index = pd.Index([r[0].name for r in result], name="id")
     annotations = pd.concat([r[1] for r in result])
     dataset2 = dataset.from_template(images=images, annotations=annotations)

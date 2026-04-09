@@ -55,7 +55,8 @@ def construct_attribute_column(
         return [list(labels_np[indices]) for indices in booleanized_column]
     else:
         return pd.Categorical(
-            numpy_generator.choice(labels, size=n_rows, p=probs), categories=labels
+            numpy_generator.choice(labels, size=n_rows, p=probs),
+            categories=labels,  # type: ignore
         )
 
 
