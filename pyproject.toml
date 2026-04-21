@@ -52,7 +52,7 @@ boto3 = "1.26.83"
 networkx = "^3.4.2"
 
 [tool.poetry.group.test.dependencies]
-pytest = "^8.3.3"
+pytest = "^9.0.0"
 pycocotools = "^2.0.8"
 pre-commit = "^4.0.0"
 coverage = "^7.6.1"
