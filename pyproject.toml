@@ -74,7 +74,7 @@ sphinx-autobuild = "^2024.0.0"
 ipython = "^8.15.0"
 sphinx-favicon = "^1.0.1"
 sphinx-argparse = "^0.5.0"
-mercury = "^2.3.10"
+mercury = "^3.0.0"
 
 
 [tool.poetry.extras]
