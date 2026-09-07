@@ -1,4 +1,4 @@
 from .detection import CrowdDetectionEvaluator, DetectionEvaluator
 from .evaluator import Evaluator
 
-__all__ = ["Evaluator", "DetectionEvaluator", "CrowdDetectionEvaluator"]
+__all__ = ["CrowdDetectionEvaluator", "DetectionEvaluator", "Evaluator"]

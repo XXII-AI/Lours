@@ -1,6 +1,5 @@
 import socketserver
 from argparse import ArgumentParser
-from logging import warn
 from pathlib import Path
 from time import sleep
 from typing import TYPE_CHECKING
@@ -256,7 +255,7 @@ def run():
     args = parser.parse_args()
 
     if not args.launch_app and not args.persistent:
-        warn(
+        warning(
             "App won't be launched and dataset is not persistent, this command will not"
             " do anything",
             RuntimeWarning,

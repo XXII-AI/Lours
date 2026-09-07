@@ -64,9 +64,7 @@ random_attribute_column_type = (
     int
     | Sequence[str]
     | Sequence[int | Sequence[float] | Sequence[str] | dict[str, float]]
-    | dict[
-        str, int | Sequence[float] | Sequence[str] | Sequence[float] | dict[str, float]
-    ]
+    | dict[str, int | Sequence[float] | Sequence[str] | dict[str, float]]
 )
 """The random attribute columns type is a way to design a column with random
 attributes.
