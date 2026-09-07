@@ -321,6 +321,5 @@ def remap_dict(flattened_dict: dict, mapping_tree: dict | None = None) -> dict:
                     # is clearly not na
                     if isna.any():  # pyright: ignore
                         raise ValueError(f"value contains nan : {output_value}")
-                    pass
             output_dict[k] = output_value
     return output_dict

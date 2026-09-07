@@ -1,6 +1,5 @@
 from collections.abc import Iterable
 from functools import partial
-from typing import TYPE_CHECKING
 
 import numpy as np
 import pandas as pd
@@ -14,9 +13,6 @@ from ...utils.grouper import (
 )
 from .detection_evaluator_base import DetectionEvaluatorBase
 from .util import resample_count
-
-if TYPE_CHECKING:
-    pass
 
 
 class CrowdDetectionEvaluator(DetectionEvaluatorBase):

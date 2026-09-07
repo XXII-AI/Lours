@@ -3,8 +3,6 @@ class IncompatibleLabelMapsError(ValueError):
     from other ValueError exceptions
     """
 
-    pass
-
 
 def merge_label_maps(
     left: dict[int, str], right: dict[int, str], method: str = "inner"

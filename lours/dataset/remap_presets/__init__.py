@@ -9,7 +9,7 @@ from importlib.resources import files
 
 import pandas as pd
 
-__all__ = ["presets", "list_available_presets"]
+__all__ = ["list_available_presets", "presets"]
 
 presets = {}
 presets_folder = files("lours") / "dataset" / "remap_presets"

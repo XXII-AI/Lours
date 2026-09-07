@@ -114,7 +114,6 @@ def check_groups(
         "category and continuous group must be a "
         "perfect partition of the histogram index"
     )
-    return
 
 
 def hist_distance(
