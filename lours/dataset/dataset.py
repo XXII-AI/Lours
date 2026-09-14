@@ -41,7 +41,7 @@ class Dataset:
           for a complete explanation of main principles.
         - :ref:`Dataset demo notebook </notebooks/1_demo_dataset.ipynb>`
 
-    """  # noqa: E501
+    """
 
     dataset_name: str | None
     images_root: Path
@@ -3535,12 +3535,12 @@ class Dataset:
             Index: []
             Label map :
             {1: 'interview'}
-        """  # noqa: E501
+        """
         if not remove_not_mapped:
             not_mapped = {
                 category_id: category_id
                 for category_id in self.label_map.keys()
-                if category_id not in class_mapping.keys()
+                if category_id not in class_mapping
             }
             class_mapping = {**class_mapping, **not_mapped}
         new_label_map = {
@@ -3726,7 +3726,7 @@ class Dataset:
             [2 rows x 8 columns]
             Label map :
             {0: 'new_listen', 1: 'new_reach'}
-        """  # noqa: E501
+        """
         if df.index.name == "input_category_id":
             mapping_df = df
         else:
@@ -3785,7 +3785,7 @@ class Dataset:
             - :meth:`.remap_from_other`
             - :meth:`.remove_classes`
             - :meth:`.keep_classes`
-        """  # noqa: E501
+        """
         mapping_df = pd.read_csv(csv).set_index("input_category_id")
         return self.remap_from_dataframe(
             mapping_df, remove_not_mapped, remove_emptied_images
@@ -4965,7 +4965,7 @@ class Dataset:
         See Also:
             - :mod:`lours.dataset.io.caipy`
             - :meth:`to_caipy_generic`
-        """  # noqa: E501
+        """
         from .io.caipy import dataset_to_caipy
 
         return dataset_to_caipy(
@@ -5033,7 +5033,7 @@ class Dataset:
             - :mod:`lours.dataset.io.caipy`
             - :meth:`to_caipy`
 
-        """  # noqa: E501
+        """
         from .io.caipy import dataset_to_caipy_generic
 
         return dataset_to_caipy_generic(

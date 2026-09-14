@@ -93,13 +93,10 @@ def test_caipy_io():
         assert max(map(len, subfolders)) == 0
 
     # Save to caipy generic and reload, ensure they are the same
-    with TemporaryDirectory() as t_images:
-        with TemporaryDirectory() as t_annotations:
-            dataset.to_caipy_generic(
-                t_images, t_annotations, copy_images=True, to_jpg=True
-            )
-            dataset2 = from_caipy_generic(t_images, t_annotations)
-            assert_dataset_equal(dataset, dataset2)
+    with TemporaryDirectory() as t_images, TemporaryDirectory() as t_annotations:
+        dataset.to_caipy_generic(t_images, t_annotations, copy_images=True, to_jpg=True)
+        dataset2 = from_caipy_generic(t_images, t_annotations)
+        assert_dataset_equal(dataset, dataset2)
 
     # Save to coco and reload, ensure they are the same
     with TemporaryDirectory() as t:

@@ -60,7 +60,6 @@ def test_dataset_share1():
     assert same_share_cost == 0
     share_cost = balanced_groups.dataset_share_distance(test_share1, test_share2)
     assert share_cost == 1
-    return
 
 
 def test_dataset_share2():
@@ -71,7 +70,6 @@ def test_dataset_share2():
     share_cost = balanced_groups.dataset_share_distance(test_share1, test_share2)
     print(share_cost)
     assert share_cost == 5 / 7
-    return
 
 
 def test_check_group():
