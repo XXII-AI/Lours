@@ -1,6 +1,5 @@
 from collections.abc import Iterable
 from functools import partial
-from typing import TYPE_CHECKING
 
 import numpy as np
 import pandas as pd
@@ -16,9 +15,6 @@ from .util import (
     construct_matches_df,
     pr_curve,
 )
-
-if TYPE_CHECKING:
-    pass
 
 
 class DetectionEvaluator(DetectionEvaluatorBase):

@@ -208,7 +208,7 @@ def from_caipy(
         - :ref:`Tutorial on schemas </notebooks/6_demo_schemas.ipynb>`
         - :ref:`Tutorial on booleanization </notebooks/7_demo_booleanize.ipynb>`
         - `cAIpy specifications <UPDATE-ME>`_
-    """  # noqa: E501
+    """
     dataset_path = Path(dataset_path)
     annotations_folder = dataset_path / "Annotations"
     images_folder = dataset_path / "Images"
@@ -285,7 +285,7 @@ def from_caipy_generic(
         - :ref:`Tutorial on schemas </notebooks/6_demo_schemas.ipynb>`
         - :ref:`Tutorial on booleanization </notebooks/7_demo_booleanize.ipynb>`
         - `cAIpy specifications <UPDATE-ME>`_
-    """  # noqa: E501
+    """
     if use_schema and json_schema is not None:
         if isinstance(json_schema, dict):
             schema = json_schema
