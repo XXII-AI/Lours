@@ -1,6 +1,5 @@
 from collections.abc import Iterable
 from functools import partial
-from typing import TYPE_CHECKING
 
 import numpy as np
 import pandas as pd
@@ -17,9 +16,6 @@ from .util import (
     pr_curve,
 )
 
-if TYPE_CHECKING:
-    pass
-
 
 class DetectionEvaluator(DetectionEvaluatorBase):
     """Class specialization for detection tasks Note that the constructor is the
@@ -29,10 +25,7 @@ class DetectionEvaluator(DetectionEvaluatorBase):
         :ref:`related tutorial </notebooks/3_demo_evaluation_detection.ipynb>`
     """
 
-    matches: dict[str, dict[str, pd.DataFrame]] = {
-        "category_specific": {},
-        "category_agnostic": {},
-    }
+    matches: dict[str, dict[str, pd.DataFrame]]
     """Nested dictionary of DataFrames containing matched bounding boxes between
     groundtruth and corresponding prediction, depending on the way of computing
     matches (between all categories or between similar categories). Note that the
@@ -359,7 +352,7 @@ class DetectionEvaluator(DetectionEvaluatorBase):
             ).all(axis=1)
             results = results[~both_none_labels]
 
-            group_dict, category_groups, continuous_groups = group_relational_data(
+            group_dict, _category_groups, _continuous_groups = group_relational_data(
                 results, groups
             )
             pandas_groups = [group_dict[name] for name in group_names]

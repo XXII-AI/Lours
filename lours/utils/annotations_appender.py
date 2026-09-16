@@ -1,6 +1,6 @@
 from collections import defaultdict
 from collections.abc import Sequence
-from typing import Any, TypeVar
+from typing import TypeVar
 
 import numpy as np
 import pandas as pd
@@ -345,7 +345,7 @@ class AnnotationAppender:
             # No bbox coordinates were added
             return
         for name, annot in self.annotations_to_append.items():
-            index = np.concatenate([self.index[k] for k in annot.keys()])
+            index = np.concatenate([self.index[k] for k in annot])
             array = np.concatenate(list(annot.values()))
             concatenated_annotations.append(pd.Series(array, index=index, name=name))
         annotations_to_append = pd.concat(concatenated_annotations, axis=1)
@@ -364,7 +364,9 @@ class AnnotationAppender:
             **annotations_to_append_dict,
         )
 
-    def __exit__(self, exit_type: Any, exit_value: Any, traceback: Any) -> None:
+    def __exit__(
+        self, exit_type: object, exit_value: object, traceback: object
+    ) -> None:
         """Function called at the en of context, when annotations have been appended.
 
         Args:

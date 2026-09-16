@@ -4,4 +4,4 @@ from . import util
 from .crowd_detection_evaluator import CrowdDetectionEvaluator
 from .detection_evaluator import DetectionEvaluator
 
-__all__ = ["DetectionEvaluator", "CrowdDetectionEvaluator", "util"]
+__all__ = ["CrowdDetectionEvaluator", "DetectionEvaluator", "util"]

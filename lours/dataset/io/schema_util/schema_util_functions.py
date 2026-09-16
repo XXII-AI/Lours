@@ -35,7 +35,7 @@ def load_json_schema(schema_path: str | Path) -> dict:
         ).open() as f:
             return json.load(f)
     if isinstance(schema_path, str) and (
-        schema_path.startswith("https://") or schema_path.startswith("http://")
+        schema_path.startswith(("https://", "http://"))
     ):
         response = requests.get(schema_path)
         response.raise_for_status()
@@ -272,7 +272,7 @@ def get_remapping_dict_from_names(
                     )
                 current[k] = name
             else:
-                if k not in current.keys():
+                if k not in current:
                     current[k] = {}
                 elif not isinstance(current[k], dict):
                     raise ValueError(
@@ -321,6 +321,5 @@ def remap_dict(flattened_dict: dict, mapping_tree: dict | None = None) -> dict:
                     # is clearly not na
                     if isna.any():  # pyright: ignore
                         raise ValueError(f"value contains nan : {output_value}")
-                    pass
             output_dict[k] = output_value
     return output_dict

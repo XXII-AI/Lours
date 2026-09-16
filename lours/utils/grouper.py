@@ -173,7 +173,7 @@ def cut_group(
             return pd.Interval(np.exp(x.left), np.exp(x.right))
 
         normal_labels = log_cut.cat.categories.map(exp_labels)
-        result = log_cut.cat.rename_categories(normal_labels)
+        result = log_cut.cat.rename_categories(list(normal_labels))
     if label_type == "intervals":
         return result
     elif label_type == "mid":

@@ -159,7 +159,7 @@ def test_label_types():
     )
     assert_almost_equal(pandas_group.cat.categories.to_numpy(), target)
 
-    group_name, pandas_group, is_category = grouper.make_pandas_compatible(
+    _group_name, pandas_group, _is_category = grouper.make_pandas_compatible(
         data=data, g=grouper.ContinuousGroup("fake_size", 10, label_type="median")
     )
 

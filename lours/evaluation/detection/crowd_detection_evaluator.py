@@ -1,6 +1,5 @@
-from collections.abc import Iterable
+from collections.abc import Callable, Iterable
 from functools import partial
-from typing import TYPE_CHECKING
 
 import numpy as np
 import pandas as pd
@@ -14,9 +13,6 @@ from ...utils.grouper import (
 )
 from .detection_evaluator_base import DetectionEvaluatorBase
 from .util import resample_count
-
-if TYPE_CHECKING:
-    pass
 
 
 class CrowdDetectionEvaluator(DetectionEvaluatorBase):
@@ -210,12 +206,12 @@ class CrowdDetectionEvaluator(DetectionEvaluatorBase):
             mre = grouped["abs_rel_error"].mean().rename("MRE")
             rmsre = np.sqrt(grouped["sq_rel_error"].mean().rename("RMSRE"))
 
-            def q_at(y):
-                def q(x):
-                    return x.quantile(y)
+            def q_at(y: float) -> Callable[[pd.Series], float]:
+                def q_func(x: pd.Series) -> float:
+                    return float(x.quantile(y))
 
-                q.__name__ = f"q{y:0.2f}"
-                return q
+                q_func.__name__ = f"q{y:0.2f}"
+                return q_func
 
             stat_agg_functions = ["std", *[q_at(q) for q in quantiles]]
             stats = grouped["error"].agg(stat_agg_functions)

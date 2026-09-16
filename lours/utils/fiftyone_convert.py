@@ -247,10 +247,10 @@ def create_fo_dataset(
         }
 
     images, image_tag_columns = make_fiftyone_compatible(images, image_tag_columns)
-    for name in list(annotations.keys()):
-        annotations[name], annotations_attributes_columns[name] = (
+    for annot_name in list(annotations.keys()):
+        annotations[annot_name], annotations_attributes_columns[annot_name] = (
             make_fiftyone_compatible(
-                annotations[name], annotations_attributes_columns[name]
+                annotations[annot_name], annotations_attributes_columns[annot_name]
             )
         )
 
