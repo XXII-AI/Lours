@@ -5,11 +5,7 @@ from pathlib import Path
 from pprint import pformat
 from typing import TYPE_CHECKING, Any, Literal
 
-try:
-    from typing import Self
-except ImportError:
-    # Fallback mechanism for python 3.10
-    from typing_extensions import Self
+from typing import Self
 from warnings import warn
 
 import numpy as np
@@ -2997,14 +2993,12 @@ class Dataset:
         capped_box_height_series = self.annotations[box_height].clip(
             0, im_dimensions["height"] - capped_ymin_series
         )
-        capped_annotations = self.annotations.assign(
-            **{
-                xmin: capped_xmin_series,
-                ymin: capped_ymin_series,
-                box_width: capped_box_width_series,
-                box_height: capped_box_height_series,
-            }
-        )
+        capped_annotations = self.annotations.assign(**{
+            xmin: capped_xmin_series,
+            ymin: capped_ymin_series,
+            box_width: capped_box_width_series,
+            box_height: capped_box_height_series,
+        })
         return self.from_template(annotations=capped_annotations)
 
     def booleanize(
@@ -3733,7 +3727,8 @@ class Dataset:
             mapping_df = df.set_index("input_category_id")
         mapping_dict = mapping_df["output_category_id"].to_dict()
         mapping_names = (
-            mapping_df.groupby("output_category_id")["output_category_name"]
+            mapping_df
+            .groupby("output_category_id")["output_category_name"]
             .first()
             .to_dict()
         )
@@ -3993,13 +3988,11 @@ class Dataset:
                 class_mapping[k] = new_id
             elif not remove_not_mapped:
                 if k in other.label_map.keys():
-                    class_mapping[k] = lowest_missing_value(
-                        [
-                            *self.label_map,
-                            *other.label_map,
-                            *class_mapping.values(),
-                        ]
-                    )
+                    class_mapping[k] = lowest_missing_value([
+                        *self.label_map,
+                        *other.label_map,
+                        *class_mapping.values(),
+                    ])
                 else:
                     # This is not needed, but the printed remapping dictionary will be
                     # more comprehensive that way

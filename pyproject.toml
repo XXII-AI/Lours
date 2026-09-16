@@ -1,86 +1,95 @@
-[tool.poetry]
+[project]
 name = "lours"
 version = "1.2.1"
 description = ""
-authors = ["XXII",
-           "Lilian Glaudin <lilian.glaudin@xxii.fr>",
-           "Clément Pinard <mail@clementpinard.fr>",
-           "Quoc Cuong LE <quoccuong.le@xxii.fr>",
-           "Nacer Kaci <nacer.kaci@xxii.fr>",
-           "Bastien Botrel <bastien.botrel@xxii.fr>"]
-packages = [
-    {include = "lours"}
+authors = [
+    { name = "XXII" },
+    { name = "Lilian Glaudin", email = "lilian.glaudin@xxii.fr" },
+    { name = "Clément Pinard", email = "mail@clementpinard.fr" },
+    { name = "Quoc Cuong LE", email = "quoccuong.le@xxii.fr" },
+    { name = "Nacer Kaci", email = "nacer.kaci@xxii.fr" },
+    { name = "Bastien Botrel", email = "bastien.botrel@xxii.fr" },
 ]
-license = "MIT"
+requires-python = ">=3.11, <3.15"
 readme = "README.md"
+license = "MIT"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+]
+dependencies = [
+    "pandas[parquet]>=2",
+    "tqdm>=4.64,<5",
+    "PyYAML>=6.0.1,<7",
+    "imageio>=2",
+    "imagesize>=2.0.0,<3",
+    "POT>=0.9.1,<0.10",
+    "jsonschema-rs>=0.29.0",
+    "scikit-learn>=1.3.0,<2",
+    "watchdog>=6.0.0,<7",
+    "toml>=0.10.2,<0.11",
+    "shortuuid>=1.0.11,<2",
+    "faker>30",
+    "requests>=2,<3",
+    "xmltodict>=1.0.0,<2",
+    "networkx>=3.4.2,<4",
+]
 
-[tool.poetry.scripts]
+[project.optional-dependencies]
+fiftyone = [
+    "fiftyone>=1.0.0",
+    "boto3==1.26.83",
+]
+plot-utils = []
+regression = ["pytest-regressions>=2.5.0,<3"]
+
+[project.scripts]
 caipy_to_fiftyone = "lours.cli.caipy_to_fiftyone:run"
 c2f = "lours.cli.caipy_to_fiftyone:run"
 
-[tool.poetry.plugins."pytest11"]
+[project.entry-points.pytest11]
 dataset_regressions = "lours.utils.regression_testing"
 
-[tool.poetry.dependencies]
-python = ">=3.11, <=3.14"
-pandas = {version = ">=2", extras = ["parquet"]}
-tqdm = "^4.64"
-PyYAML = "^6.0.1"
-imageio = "^2.31.3"
-imagesize = "^2.0.0"
-POT = "^0.9.1"
-jsonschema-rs = "^0.29.0"
-scikit-learn = "^1.3.0"
-typing-extensions = "^4.7.1"
-watchdog = "^6.0.0"
-toml = "^0.10.2"
-shortuuid = "^1.0.11"
-faker = ">30"
-requests= "^2"
-fiftyone = "^1.0.0"
-xmltodict = "^1.0.0"
-pytest-regressions = "^2.5.0"
+[dependency-groups]
+test = [
+    "pytest>=9.0.0,<10",
+    "pycocotools>=2.0.8,<3",
+    "pre-commit>=4.0.0,<5",
+    "coverage>=7.6.1,<8",
+    "pandas-stubs>=2",
+    "pytest-sugar>=1.0.0,<2",
+    "ipykernel>=7,<8",
+    "ipywidgets>=8.0.3,<9",
+    "pytest-xdist>=3.6.1,<4",
+]
+docs = [
+    "Sphinx>=9,<=10",
+    "pydata-sphinx-theme>=0.17.0,<0.18",
+    "myst-parser>=5,<6",
+    "jupyter>=1.0.0,<2",
+    "seaborn>=0.13.0,<0.14",
+    "nbsphinx>=0.9.3,<0.10",
+    "sphinx-copybutton>=0.5.2,<0.6",
+    "sphinx-autobuild>=2025,<2026",
+    "ipython>=9,<10",
+    "sphinx-favicon>=1.0.1,<2",
+    "sphinx-argparse>=0.6.0,<0.7",
+    "mercury>=3",
+]
 
-# Pinning boto3 is needed because of fiftyone's dependencies
-# because Boto3/botocore has way too much different versions.
-# Since fiftyone declared its dependence on but with any version ("*"), the dependency
-# resolving takes forever because it tries every single boto3 version.
-# See similar problem with awscli : https://github.com/python-poetry/poetry/issues/1173
-# See related issue on fiftyone :
-# https://github.com/voxel51/fiftyone/issues/3145
-boto3 = "1.26.83"
-networkx = "^3.4.2"
+[tool.uv]
+default-groups = "all"
 
-[tool.poetry.group.test.dependencies]
-pytest = "^9.0.0"
-pycocotools = "^2.0.8"
-pre-commit = "^4.0.0"
-coverage = "^7.6.1"
-pandas-stubs = "^2"
-pytest-sugar = "^1.0.0"
-ipykernel = "^6.29.0"
-ipywidgets = "^8.0.3"
-pytest-xdist = "^3.6.1"
+[tool.uv.build-backend]
+module-name = ["lours"]
+module-root = ""
 
-[tool.poetry.group.docs.dependencies]
-Sphinx = "^8.0.0"
-pydata-sphinx-theme = "^0.17.0"
-myst-parser = "^4.0.0"
-jupyter = "^1.0.0"
-seaborn = "^0.13.0"
-nbsphinx = "^0.9.3"
-sphinx-copybutton = "^0.5.2"
-sphinx-autobuild = "^2024.0.0"
-ipython = "^8.15.0"
-sphinx-favicon = "^1.0.1"
-sphinx-argparse = "^0.6.0"
-mercury = "^2.3.10"
-
-
-[tool.poetry.extras]
-fiftyone = ["fiftyone", "boto3"]
-plot-utils = ["matplotlib"]
-regression = ["pytest-regressions"]
+[build-system]
+requires = ["uv_build>=0.12.13,<0.13.0"]
+build-backend = "uv_build"
 
 [tool.pydoclint]
 style = 'google'
@@ -94,10 +103,6 @@ check-yield-types = false
 doctest_optionflags = ["NORMALIZE_WHITESPACE", "ELLIPSIS"]
 addopts = "--import-mode=importlib --doctest-modules"
 testpaths = ["test_lours", "lours"]
-
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
 
 # Only measure coverage for the lours package
 [tool.coverage.run]

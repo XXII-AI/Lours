@@ -1,8 +1,8 @@
 import warnings
 from pathlib import Path
+from typing import Self
 
 import pandas as pd
-from typing_extensions import Self
 
 from ..dataset import Dataset
 from ..utils.label_map_merger import merge_label_maps

@@ -25,9 +25,6 @@ jobs:
       - name: "Checkout repository 🛎"
         uses: actions/checkout@v7
 
-      - name: Install poetry
-        uses: abatilo/actions-poetry@v4
-
       - name: "Build and inspect package 📦"
         uses: hynek/build-and-inspect-python-package@v2
         id: baipp
