@@ -1,18 +1,19 @@
 [
+
+  {
+    "name": "v1.3.0",
+    "version": "1.3.0",
+    "url": "https://lours.readthedocs.io/stable/"
+  },
   {
     "name": "v1.2.1",
     "version": "1.2.1",
-    "url": "https://lours.readthedocs.io/stable/"
+    "url": "https://lours.readthedocs.io/1.2.1/"
   },
   {
     "name": "v1.1.0",
     "version": "1.1.0",
     "url": "https://lours.readthedocs.io/1.1.0/"
-  },
-  {
-    "name": "v1.0.1",
-    "version": "1.0.1",
-    "url": "https://lours.readthedocs.io/1.0.1/"
   },
   {
     "name": "dev (latest)",
