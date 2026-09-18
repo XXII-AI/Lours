@@ -88,5 +88,5 @@ jobs:
       - name: Install the project dependencies
         run: uv sync --group test --all-extras
       - run: echo "$PWD/.venv/bin" >> $GITHUB_PATH
-      - uses: jakebailey/pyright-action@v2
+      - uses: jakebailey/pyright-action@v3
         name: Run pyright
