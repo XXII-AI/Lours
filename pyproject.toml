@@ -43,7 +43,7 @@ fiftyone = [
     "fiftyone>=1.0.0",
     "boto3==1.26.83",
 ]
-plot-utils = []
+plot-utils = ["matplotlib>=3"]
 regression = ["pytest-regressions>=2.5.0,<3"]
 
 [project.scripts]
