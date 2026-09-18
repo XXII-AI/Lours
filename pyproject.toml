@@ -67,7 +67,7 @@ test = [
 ]
 docs = [
     "Sphinx>=9,<=10",
-    "pydata-sphinx-theme>=0.17.0,<0.18",
+    "pydata-sphinx-theme>=0.21,<0.22",
     "myst-parser>=5,<6",
     "jupyter>=1.0.0,<2",
     "seaborn>=0.13.0,<0.14",
