@@ -1,8 +1,8 @@
 import warnings
 from pathlib import Path
+from typing import Self
 
 import pandas as pd
-from typing_extensions import Self
 
 from ..dataset import Dataset
 from ..utils.label_map_merger import merge_label_maps
@@ -90,7 +90,7 @@ class Evaluator:
         return [
             str(c)
             for c in self.images.columns
-            if c not in self._default_image_columns_width_types.keys()
+            if c not in self._default_image_columns_width_types
         ]
 
     def get_annotations_attributes(
@@ -121,7 +121,7 @@ class Evaluator:
         return [
             str(c)
             for c in predictions.columns
-            if c not in self._default_annotation_columns_with_types.keys()
+            if c not in self._default_annotation_columns_with_types
         ]
 
     def add_predictions_dataset(self, predictions_name: str, predictions: Dataset):
@@ -249,9 +249,9 @@ class Evaluator:
         )
         predictions = input_dict["predictions_dictionary"]
         evaluator = cls(groundtruth_dataset)
-        for name, predictions in predictions.items():
-            evaluator.add_predictions(name, predictions)
-        for k, v in vars(evaluator).items():
+        for name, predictions_subset in predictions.items():
+            evaluator.add_predictions(name, predictions_subset)
+        for k in vars(evaluator):
             loaded_value = input_dict.get(k, None)
             if loaded_value is not None:
                 evaluator.__dict__[k] = loaded_value

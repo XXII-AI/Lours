@@ -278,21 +278,17 @@ def import_bbox(
 
     if input_format_options["relative"]:
         im_width = (
-            images_df.loc[image_ids, "width"]  # pyright: ignore
-            .to_numpy()
-            .astype(float)
+            images_df.loc[np.asarray(image_ids), "width"].to_numpy().astype(float)
         )
         im_height = (
-            images_df.loc[image_ids, "height"]  # pyright: ignore
-            .to_numpy()
-            .astype(float)
+            images_df.loc[np.asarray(image_ids), "height"].to_numpy().astype(float)
         )
-        x1 *= im_width
-        y1 *= im_height
+        x1 = x1 * im_width
+        y1 = y1 * im_height
 
         if not input_format_options["point"]:
-            x2 *= im_width
-            y2 *= im_height
+            x2 = x2 * im_width
+            y2 = y2 * im_height
 
     if input_format_options["center"]:
         xmin, width = x1 - x2 / 2, x2

@@ -45,10 +45,10 @@ def construct_attribute_column(
             ).astype(bool)
         else:
             booleanized_column = np.stack(
-                list(
+                [
                     numpy_generator.choice([True, False], size=n_rows, p=[p_, 1 - p_])
                     for p_ in probs
-                ),
+                ],
                 axis=-1,
             )
         labels_np = np.array(list(labels))
@@ -64,9 +64,7 @@ random_attribute_column_type = (
     int
     | Sequence[str]
     | Sequence[int | Sequence[float] | Sequence[str] | dict[str, float]]
-    | dict[
-        str, int | Sequence[float] | Sequence[str] | Sequence[float] | dict[str, float]
-    ]
+    | dict[str, int | Sequence[float] | Sequence[str] | dict[str, float]]
 )
 """The random attribute columns type is a way to design a column with random
 attributes.
@@ -496,7 +494,7 @@ def dummy_dataset(
         0    force
         1    force
         Name: b, dtype: category
-        Categories (3, object): ['week', 'choice', 'force']
+        Categories (3, str): ['week', 'choice', 'force']
 
         Instead of integers, use lists of probabilities to steer the distribution of
         attributes.

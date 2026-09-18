@@ -1,15 +1,10 @@
+import itertools
 from collections.abc import Iterable, Iterator, Sequence
 from copy import deepcopy
 from os.path import normpath, relpath
 from pathlib import Path
 from pprint import pformat
-from typing import TYPE_CHECKING, Any, Literal
-
-try:
-    from typing import Self
-except ImportError:
-    # Fallback mechanism for python 3.10
-    from typing_extensions import Self
+from typing import TYPE_CHECKING, Any, Literal, Self
 from warnings import warn
 
 import numpy as np
@@ -30,6 +25,28 @@ if TYPE_CHECKING:
     from ..utils.annotations_appender import AnnotationAppender
     from .indexing import DatasetAnnotLocator, DatasetImLocator
 
+IMAGE_REQUIRED_COLUMNS = {"width", "height", "relative_path"}
+IMAGE_COLUMNS_DTYPES = {
+    "width": int,
+    "height": int,
+    "relative_path": object,
+    "type": str,
+    "split": str,
+}
+
+ANNOT_REQUIRED_COLUMNBS = {
+    "image_id",
+    "category_id",
+    *BBOX_COLUMN_NAMES,
+}
+ANNOT_COLUMNS_DTYPES = {
+    "image_id": int,
+    "category_str": str,
+    "category_id": int,
+    "split": str,
+    **{n: float for n in BBOX_COLUMN_NAMES},
+}
+
 
 class Dataset:
     """Dataset base class for manipulation
@@ -41,34 +58,18 @@ class Dataset:
           for a complete explanation of main principles.
         - :ref:`Dataset demo notebook </notebooks/1_demo_dataset.ipynb>`
 
-    """  # noqa: E501
+    """
 
     dataset_name: str | None
     images_root: Path
     images: pd.DataFrame
     annotations: pd.DataFrame
     label_map: dict[int, str]
-    _image_required_columns: set[str] = {"width", "height", "relative_path"}
-    _default_image_columns_with_types: dict[str, Dtype] = {
-        "width": int,
-        "height": int,
-        "relative_path": object,
-        "type": str,
-        "split": str,
-    }
-    _annotations_required_columns: set[str] = {
-        "image_id",
-        "category_id",
-        *BBOX_COLUMN_NAMES,
-    }
-    _default_annotation_columns_with_types: dict[str, Dtype] = {
-        "image_id": int,
-        "category_str": str,
-        "category_id": int,
-        "split": str,
-        **{n: float for n in BBOX_COLUMN_NAMES},
-    }
-    booleanized_columns: dict[str, set[str]] = {"images": set(), "annotations": set()}
+    _image_required_columns: set[str] = IMAGE_REQUIRED_COLUMNS
+    _default_image_columns_with_types: dict[str, Dtype] = IMAGE_COLUMNS_DTYPES
+    _annotations_required_columns: set[str] = ANNOT_REQUIRED_COLUMNBS
+    _default_annotation_columns_with_types: dict[str, Dtype] = ANNOT_COLUMNS_DTYPES
+    booleanized_columns: dict[str, set[str]]
 
     def __init__(
         self,
@@ -1584,7 +1585,7 @@ class Dataset:
         return [
             str(c)
             for c in self.images.columns
-            if c not in self._default_image_columns_with_types.keys()
+            if c not in self._default_image_columns_with_types
         ]
 
     def get_annotations_attributes(self) -> list[str]:
@@ -1631,7 +1632,7 @@ class Dataset:
         return [
             str(c)
             for c in self.annotations.columns
-            if c not in self._default_annotation_columns_with_types.keys()
+            if c not in self._default_annotation_columns_with_types
         ]
 
     def __getitem__(self, args: Any) -> Self:
@@ -3103,9 +3104,9 @@ class Dataset:
             {15: 'step', 19: 'why', 25: 'interview'}
             >>> modified.annotations.dtypes
             image_id          int64
-            category_str     object
+            category_str        str
             category_id       int64
-            split            object
+            split               str
             box_x_min       float64
             box_y_min       float64
             box_width       float64
@@ -3535,12 +3536,12 @@ class Dataset:
             Index: []
             Label map :
             {1: 'interview'}
-        """  # noqa: E501
+        """
         if not remove_not_mapped:
             not_mapped = {
                 category_id: category_id
-                for category_id in self.label_map.keys()
-                if category_id not in class_mapping.keys()
+                for category_id in self.label_map
+                if category_id not in class_mapping
             }
             class_mapping = {**class_mapping, **not_mapped}
         new_label_map = {
@@ -3726,7 +3727,7 @@ class Dataset:
             [2 rows x 8 columns]
             Label map :
             {0: 'new_listen', 1: 'new_reach'}
-        """  # noqa: E501
+        """
         if df.index.name == "input_category_id":
             mapping_df = df
         else:
@@ -3785,7 +3786,7 @@ class Dataset:
             - :meth:`.remap_from_other`
             - :meth:`.remove_classes`
             - :meth:`.keep_classes`
-        """  # noqa: E501
+        """
         mapping_df = pd.read_csv(csv).set_index("input_category_id")
         return self.remap_from_dataframe(
             mapping_df, remove_not_mapped, remove_emptied_images
@@ -3978,7 +3979,7 @@ class Dataset:
 
         def lowest_missing_value(input_list: Iterable[int]) -> int:
             sorted_values = sorted(set(input_list))
-            for s1, s2 in zip(sorted_values[:-1], sorted_values[1:]):
+            for s1, s2 in itertools.pairwise(sorted_values):
                 if s2 - s1 > 1:
                     return s1 + 1
             return max(sorted_values) + 1
@@ -3992,7 +3993,7 @@ class Dataset:
             if new_id is not None:
                 class_mapping[k] = new_id
             elif not remove_not_mapped:
-                if k in other.label_map.keys():
+                if k in other.label_map:
                     class_mapping[k] = lowest_missing_value(
                         [
                             *self.label_map,
@@ -4377,6 +4378,8 @@ class Dataset:
             inplace=inplace,
         )
         if inplace:
+            self.init_images()
+            self.init_annotations()
             return self
         else:
             return self.from_template(images=splitted_images)
@@ -4552,44 +4555,44 @@ class Dataset:
             {14: 'listen', 15: 'marriage', 22: 'reach'}
             >>> splitted.images.groupby("split")["separate"].value_counts()
             split  separate
-            train  star        27
-                   likely      27
+            train  likely      27
                    number      27
+                   star        27
                    attack      22
                    entire      17
                    enough      16
                    system      15
-                   rest         0
                    law          0
+                   rest         0
                    often        0
             valid  rest        20
                    law         18
                    often       11
-                   entire       0
-                   star         0
-                   attack       0
-                   likely       0
                    system       0
+                   likely       0
+                   attack       0
                    enough       0
                    number       0
+                   star         0
+                   entire       0
             Name: count, dtype: int64
             >>> splitted.images.groupby("split")["balanced"].value_counts()
             split  balanced
             train  could       21
-                   coach       20
                    end         20
+                   coach       20
                    firm        17
                    send        16
                    anything    14
                    training    13
-                   lead        10
                    note        10
                    region      10
-            valid  could        8
-                   send         8
+                   lead        10
+            valid  send         8
+                   could        8
                    note         6
-                   firm         5
                    anything     5
+                   firm         5
                    training     4
                    region       4
                    end          4
@@ -4674,6 +4677,8 @@ class Dataset:
         )
 
         if inplace:
+            self.init_images()
+            self.init_annotations()
             return self
 
         return self.from_template(
@@ -4965,7 +4970,7 @@ class Dataset:
         See Also:
             - :mod:`lours.dataset.io.caipy`
             - :meth:`to_caipy_generic`
-        """  # noqa: E501
+        """
         from .io.caipy import dataset_to_caipy
 
         return dataset_to_caipy(
@@ -5033,7 +5038,7 @@ class Dataset:
             - :mod:`lours.dataset.io.caipy`
             - :meth:`to_caipy`
 
-        """  # noqa: E501
+        """
         from .io.caipy import dataset_to_caipy_generic
 
         return dataset_to_caipy_generic(

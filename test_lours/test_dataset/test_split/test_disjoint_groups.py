@@ -49,7 +49,9 @@ def test_atomic_groups_already_assigned():
         columns=cols,
     )
     result_df_list = [
-        pd.DataFrame([[3, 4, None], [3, 5, None]], columns=cols, index=[6, 7]),
+        pd.DataFrame([[3, 4, None], [3, 5, None]], columns=cols, index=[6, 7]).astype(
+            {"c": str}
+        ),
     ]
     result_assigned = {
         "a": pd.DataFrame(
@@ -155,7 +157,9 @@ def test_atomic_groups_nan_values_already_assigned():
         columns=cols,
     )
     result_df_list = [
-        pd.DataFrame([[3.0, 4.0, None], [3.0, 5.0, None]], columns=cols, index=[6, 7]),
+        pd.DataFrame(
+            [[3.0, 4.0, None], [3.0, 5.0, None]], columns=cols, index=[6, 7]
+        ).astype({"c": str}),
     ]
     result_assigned = {
         "a": pd.DataFrame(

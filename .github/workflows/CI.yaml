@@ -27,37 +27,29 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.11", "3.12", "3.13"]
+        python-version: ["3.11", "3.12", "3.13", "3.14"]
         # test fail on windows for now
         os: [ubuntu-24.04, ubuntu-latest, macos-latest]
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v7
-      - uses: actions/setup-python@v7
+      - name: Install uv
+        uses: astral-sh/setup-uv@v10.1.0
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Install poetry
-        uses: abatilo/actions-poetry@v4
-      - name: Setup poetry
+          enable-cache: true
+          cache-dependency-glob: "pyproject.toml"
+      - name: Set up Python
         run: |
-          poetry config virtualenvs.create true --local
-          poetry config virtualenvs.in-project true --local
-      - uses: actions/cache@v6
-        name: Define a cache for the virtual environment based on the dependencies file
-        with:
-          path: |
-            ./.venv
-            poetry.lock
-          key: venv-${{ hashFiles('pyproject.toml') }}-${{ matrix.python-version }}-${{ matrix.os }}
-      - name: Install the project dependencies
-        run: poetry install --with test --all-extras
+          uv python install
+          uv sync --group test --all-extras
       - name: Run the test
         run: |
-          poetry run coverage run -m pytest
-          poetry run coverage xml
+          uv run coverage run -m pytest
+          uv run coverage xml
       - name: Upload Coverage to Codecov
-        if: matrix.python-version == '3.11' && matrix.os == 'ubuntu-latest'
-        uses: codecov/codecov-action@v5
+        if: matrix.python-version == '3.14' && matrix.os == 'ubuntu-latest'
+        uses: codecov/codecov-action@v7
         with:
           fail_ci_if_error: true
           token: ${{ secrets.CODECOV_TOKEN }}
@@ -68,49 +60,33 @@ jobs:
     steps:
       - name: "Checkout repository 🛎"
         uses: actions/checkout@v7
-      - name: Install poetry
-        uses: abatilo/actions-poetry@v4
+      - name: Install uv
+        uses: astral-sh/setup-uv@v10.1.0
+        with:
+          enable-cache: true
+          cache-dependency-glob: "pyproject.toml"
       - name: "Install pandoc 📝"
         uses: r-lib/actions/setup-pandoc@v2
         with:
           pandoc-version: "latest"
-      - name: Setup poetry
-        run: |
-          poetry config virtualenvs.create true --local
-          poetry config virtualenvs.in-project true --local
-      - uses: actions/cache@v6
-        name: Define a cache for the virtual environment based on the dependencies lock file
-        with:
-          path: |
-            ./.venv
-            poetry.lock
-          key: venv-${{ hashFiles('pyproject.toml') }}
       - name: Install the project dependencies
-        run: poetry install --with test --all-extras
+        run: uv sync --group test --all-extras
       - name: "Build docs and check for warnings 📖"
         shell: bash
         run: |
-          poetry run sphinx-build docs docs/_build -W
+          uv run sphinx-build docs docs/_build -W
 
   run-pyright:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - name: Install poetry
-        uses: abatilo/actions-poetry@v4
-      - name: Setup poetry
-        run: |
-          poetry config virtualenvs.create true --local
-          poetry config virtualenvs.in-project true --local
-      - uses: actions/cache@v6
-        name: Define a cache for the virtual environment based on the dependencies file
+      - name: Install uv
+        uses: astral-sh/setup-uv@v10.1.0
         with:
-          path: |
-            ./.venv
-            poetry.lock
-          key: venv-${{ hashFiles('pyproject.toml') }}
+          enable-cache: true
+          cache-dependency-glob: "pyproject.toml"
       - name: Install the project dependencies
-        run: poetry install --with test --all-extras
+        run: uv sync --group test --all-extras
       - run: echo "$PWD/.venv/bin" >> $GITHUB_PATH
       - uses: jakebailey/pyright-action@v2
         name: Run pyright

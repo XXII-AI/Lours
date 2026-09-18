@@ -9,7 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Switch for `poetry` to `uv` and change github actions accordingly. #111
 - Improve README #42
+- Dropped support for python 3.10 #111
+
+### Fixed
+
+- Rework package constraints to be more flexible #111
 
 ## [1.2.1] - 2025-03-19
 

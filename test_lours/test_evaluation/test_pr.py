@@ -23,7 +23,7 @@ def test_cocoapi_matches():
         split="valid",
     )
     evaluator = DetectionEvaluator(dataset, predictions=predictions)
-    pr, aps = evaluator.compute_precision_recall(
+    _pr, aps = evaluator.compute_precision_recall(
         ious=[0, 0.2, 0.5], groups="category_id"
     )
     coco_gt = COCO(DATA / "coco_dataset/annotations_valid_random.json")
@@ -57,7 +57,7 @@ def test_pr_different_label_maps():
     # for class id 0 (no prediction),
     # and only false positive for class id 2 (no groundtruth)
     evaluator = DetectionEvaluator(dataset, predictions=predictions)
-    pr, aps = evaluator.compute_precision_recall(
+    pr, _aps = evaluator.compute_precision_recall(
         ious=[0, 0.2, 0.5], groups="category_id"
     )
     # PR curve should have 3 categories, with 2 of them set to 0 almost everywhere

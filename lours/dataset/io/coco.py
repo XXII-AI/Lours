@@ -1,7 +1,7 @@
 import json
 import shutil
 from collections.abc import Iterable
-from datetime import date
+from datetime import UTC, datetime
 from pathlib import Path
 
 import pandas as pd
@@ -119,7 +119,7 @@ def from_coco(
 
     if "category_id" not in annotations.columns:
         assert len(label_map) == 1
-        annotations["category_id"] = list(label_map)[0]
+        annotations["category_id"] = next(iter(label_map))
 
     if annotations["category_id"].hasnans:
         raise ValueError(
@@ -228,7 +228,7 @@ def dataset_to_coco(
     else:
         output_path.mkdir(exist_ok=True, parents=True)
         output_file_name = "annotations"
-    now = date.today()
+    now = datetime.now(tz=UTC).today()
 
     if add_split_suffix is None:
         add_split_suffix = len(dataset.annotations.split.unique()) > 1

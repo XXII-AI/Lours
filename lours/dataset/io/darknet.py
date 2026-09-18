@@ -112,8 +112,7 @@ def write_data_file(data: dict[str, str | int], data_file: Path) -> None:
     """
     keys = ["classes", "train", "valid", "names", "backup"]
     with open(data_file, "w") as f:
-        for key in keys:
-            f.write(f"{key} = {data.get(key, '')}\n")
+        f.writelines(f"{key} = {data.get(key, '')}\n" for key in keys)
 
 
 def yolov5_img_path_to_label_path(img_path: Path) -> Path:
@@ -129,7 +128,7 @@ def yolov5_img_path_to_label_path(img_path: Path) -> Path:
 
     Returns:
         corresponding label file as it would have been searched for by yolov5
-    """  # noqa: E501
+    """
     annotation_path = img_path.with_suffix(".txt")
     folder_parts = list(annotation_path.parts)
     if "images" in folder_parts:

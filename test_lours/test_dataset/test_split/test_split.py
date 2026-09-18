@@ -275,7 +275,6 @@ def test_simple_split(inplace):
 
     split_share_target = pd.Series([0.9, 0.1], index=["train", "valid"])
     result_share = splitted_coco.images["split"].value_counts() / len(coco)
-
     assert_series_equal(
         split_share_target,
         result_share,

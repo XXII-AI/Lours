@@ -205,7 +205,7 @@ def test_assert_dataset_equal():
         assert_dataset_equal(dataset, dataset2)
 
     dataset2 = get_valid_dataset()
-    dataset2.label_map[list(dataset2.label_map)[0]] = "new class"
+    dataset2.label_map[next(iter(dataset2.label_map))] = "new class"
 
     with pytest.raises(AssertionError):
         assert_dataset_equal(dataset, dataset2)

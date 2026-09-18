@@ -53,7 +53,7 @@ def load_caipy_annot_folder(
             frame_data = json.load(f)
         if validator is not None:
             validator.validate(frame_data)
-        if "type" in frame_data.keys():
+        if "type" in frame_data:
             assert (
                 frame_data["type"] == "instances"
             ), "Only instance type supported for now"
@@ -208,7 +208,7 @@ def from_caipy(
         - :ref:`Tutorial on schemas </notebooks/6_demo_schemas.ipynb>`
         - :ref:`Tutorial on booleanization </notebooks/7_demo_booleanize.ipynb>`
         - `cAIpy specifications <UPDATE-ME>`_
-    """  # noqa: E501
+    """
     dataset_path = Path(dataset_path)
     annotations_folder = dataset_path / "Annotations"
     images_folder = dataset_path / "Images"
@@ -285,7 +285,7 @@ def from_caipy_generic(
         - :ref:`Tutorial on schemas </notebooks/6_demo_schemas.ipynb>`
         - :ref:`Tutorial on booleanization </notebooks/7_demo_booleanize.ipynb>`
         - `cAIpy specifications <UPDATE-ME>`_
-    """  # noqa: E501
+    """
     if use_schema and json_schema is not None:
         if isinstance(json_schema, dict):
             schema = json_schema
@@ -501,9 +501,7 @@ def split_to_caipy(
             }
             image_dict = remap_dict(image_dict, image_remapping_dict)
             annot_list = instances.to_dict("records")
-            annot_list = list(
-                map(lambda x: remap_dict(x, annotations_remapping_dict), annot_list)
-            )
+            annot_list = [remap_dict(x, annotations_remapping_dict) for x in annot_list]
             annotations_dict = {
                 "image": image_dict,
                 "type": "instances",

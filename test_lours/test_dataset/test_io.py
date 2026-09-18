@@ -4,8 +4,6 @@ import warnings
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
-import pandas as pd
-
 with warnings.catch_warnings():
     warnings.simplefilter("ignore", category=DeprecationWarning)
     import fiftyone as fo
@@ -93,13 +91,10 @@ def test_caipy_io():
         assert max(map(len, subfolders)) == 0
 
     # Save to caipy generic and reload, ensure they are the same
-    with TemporaryDirectory() as t_images:
-        with TemporaryDirectory() as t_annotations:
-            dataset.to_caipy_generic(
-                t_images, t_annotations, copy_images=True, to_jpg=True
-            )
-            dataset2 = from_caipy_generic(t_images, t_annotations)
-            assert_dataset_equal(dataset, dataset2)
+    with TemporaryDirectory() as t_images, TemporaryDirectory() as t_annotations:
+        dataset.to_caipy_generic(t_images, t_annotations, copy_images=True, to_jpg=True)
+        dataset2 = from_caipy_generic(t_images, t_annotations)
+        assert_dataset_equal(dataset, dataset2)
 
     # Save to coco and reload, ensure they are the same
     with TemporaryDirectory() as t:
@@ -640,7 +635,8 @@ def test_pascalvoc():
     assert len(dataset_generic) == 6
     assert dataset_generic.len_annot() == 21
 
-    assert set(dataset_generic.images["split"].unique()) == {"train", "val", pd.NA}
+    assert set(dataset_generic.images["split"].dropna().unique()) == {"train", "val"}
+    assert dataset_generic.images["split"].isna().sum() == 1
 
 
 def test_mot():

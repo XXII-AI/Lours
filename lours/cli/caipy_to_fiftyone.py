@@ -1,9 +1,9 @@
 import socketserver
 from argparse import ArgumentParser
-from logging import warn
 from pathlib import Path
 from time import sleep
 from typing import TYPE_CHECKING
+from warnings import warn
 
 from watchdog.events import (
     EVENT_TYPE_CLOSED,
