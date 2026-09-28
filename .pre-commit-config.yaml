@@ -14,7 +14,7 @@ repos:
   - id: check-yaml
     exclude: .gitlab-ci.yml
 - repo: https://github.com/astral-sh/ruff-pre-commit
-  rev: v0.16.8
+  rev: v0.16.9
   hooks:
   - id: ruff-check
     args:
@@ -43,7 +43,7 @@ repos:
     additional_dependencies:
     - tomli
 - repo: https://github.com/jsh9/pydoclint
-  rev: 0.9.1
+  rev: 0.10.1
   hooks:
   - id: pydoclint
     args:
