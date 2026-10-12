@@ -435,8 +435,7 @@ def export_bbox(
     )
     new_column_order = [
         # order needs to be reversed to construct the dataframe the right way
-        bbox_df.columns[order.index(i)]
-        for i in range(len(order))
+        bbox_df.columns[order.index(i)] for i in range(len(order))
     ]
     return bbox_df[new_column_order]
 
